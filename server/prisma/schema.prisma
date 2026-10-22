@@ -1,0 +1,260 @@
+// Prisma schema — attendance, personal tasks and payroll system.
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  EMPLOYEE
+  TEAM_LEADER
+}
+
+enum WorkLocation {
+  OFFICE
+  HOME
+}
+
+enum SessionEndType {
+  END_OF_DAY
+  PAUSE
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+// Declaration order matters: PostgreSQL sorts enums by it (LOW < MEDIUM < HIGH).
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum CorrectionKind {
+  SELF
+  REQUEST
+}
+
+enum CorrectionStatus {
+  APPLIED
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum NonWorkingDayType {
+  HOLIDAY
+  VACATION
+  STUDY_DAY
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String   @db.VarChar(80)
+  email        String   @unique @db.VarChar(120)
+  passwordHash String
+  role         Role
+  hourlyRate   Decimal? @db.Decimal(8, 2)
+  teamId       Int?
+  createdAt    DateTime @default(now())
+
+  team               Team?               @relation("TeamMembers", fields: [teamId], references: [id])
+  ledTeam            Team?               @relation("TeamLeader")
+  sessions           AttendanceSession[]
+  pulses             Pulse[]
+  tasks              Task[]
+  corrections        TimeCorrection[]    @relation("CorrectionOwner")
+  reviewedCorrections TimeCorrection[]   @relation("CorrectionReviewer")
+  sickNotes          SickNote[]          @relation("SickNoteOwner")
+  reviewedSickNotes  SickNote[]          @relation("SickNoteReviewer")
+  announcements      Announcement[]
+  monthLocks         MonthLock[]
+  payrollSnapshots   PayrollSnapshot[]
+
+  @@index([teamId])
+}
+
+model Team {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(80)
+  joinCode  String   @unique @db.VarChar(20)
+  leaderId  Int      @unique
+  createdAt DateTime @default(now())
+
+  leader           User              @relation("TeamLeader", fields: [leaderId], references: [id])
+  members          User[]            @relation("TeamMembers")
+  nonWorkingDays   NonWorkingDay[]
+  announcements    Announcement[]
+  monthLocks       MonthLock[]
+  payrollSnapshots PayrollSnapshot[]
+}
+
+model AttendanceSession {
+  id           Int             @id @default(autoincrement())
+  userId       Int
+  workDate     DateTime        @db.Date
+  clockIn      DateTime
+  clockOut     DateTime?
+  location     WorkLocation
+  endType      SessionEndType?
+  dailySummary String?         @db.VarChar(300)
+  remarks      String?         @db.VarChar(300)
+  isManual     Boolean         @default(false)
+  createdAt    DateTime        @default(now())
+
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  corrections TimeCorrection[]
+
+  @@index([userId, workDate])
+}
+
+model Pulse {
+  id           Int       @id @default(autoincrement())
+  userId       Int
+  workDate     DateTime  @db.Date
+  scheduledAt  DateTime
+  answeredAt   DateTime?
+  responseText String?   @db.VarChar(150)
+  createdAt    DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, workDate])
+}
+
+model Task {
+  id               Int          @id @default(autoincrement())
+  userId           Int
+  title            String       @db.VarChar(120)
+  taskDate         DateTime     @db.Date
+  status           TaskStatus   @default(TODO)
+  priority         TaskPriority @default(MEDIUM)
+  estimatedMinutes Int
+  carriedOverCount Int          @default(0)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, taskDate])
+}
+
+model TimeCorrection {
+  id           Int              @id @default(autoincrement())
+  userId       Int
+  sessionId    Int?
+  workDate     DateTime         @db.Date
+  newClockIn   DateTime?
+  newClockOut  DateTime?
+  location     WorkLocation?
+  reason       String           @db.VarChar(300)
+  kind         CorrectionKind
+  status       CorrectionStatus
+  units        Int
+  reviewedById Int?
+  reviewedAt   DateTime?
+  createdAt    DateTime         @default(now())
+
+  user       User               @relation("CorrectionOwner", fields: [userId], references: [id], onDelete: Cascade)
+  session    AttendanceSession? @relation(fields: [sessionId], references: [id], onDelete: SetNull)
+  reviewedBy User?              @relation("CorrectionReviewer", fields: [reviewedById], references: [id])
+
+  @@index([userId, createdAt])
+}
+
+model SickNote {
+  id           Int          @id @default(autoincrement())
+  userId       Int
+  fromDate     DateTime     @db.Date
+  toDate       DateTime     @db.Date
+  note         String?      @db.VarChar(300)
+  fileName     String       @db.VarChar(200)
+  mimeType     String       @db.VarChar(50)
+  fileData     Bytes
+  status       ReviewStatus @default(PENDING)
+  reviewedById Int?
+  reviewedAt   DateTime?
+  createdAt    DateTime     @default(now())
+
+  user       User  @relation("SickNoteOwner", fields: [userId], references: [id], onDelete: Cascade)
+  reviewedBy User? @relation("SickNoteReviewer", fields: [reviewedById], references: [id])
+
+  @@index([userId, fromDate])
+}
+
+model NonWorkingDay {
+  id        Int               @id @default(autoincrement())
+  teamId    Int
+  date      DateTime          @db.Date
+  type      NonWorkingDayType
+  note      String?           @db.VarChar(200)
+  createdAt DateTime          @default(now())
+
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, date])
+}
+
+model Announcement {
+  id        Int       @id @default(autoincrement())
+  teamId    Int
+  authorId  Int
+  title     String    @db.VarChar(100)
+  content   String    @db.VarChar(1000)
+  expiresAt DateTime? @db.Date
+  createdAt DateTime  @default(now())
+
+  team   Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([teamId])
+}
+
+model MonthLock {
+  id         Int      @id @default(autoincrement())
+  teamId     Int
+  year       Int
+  month      Int
+  lockedById Int
+  lockedAt   DateTime @default(now())
+
+  team     Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  lockedBy User @relation(fields: [lockedById], references: [id])
+
+  @@unique([teamId, year, month])
+}
+
+model PayrollSnapshot {
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  teamId        Int
+  year          Int
+  month         Int
+  hourlyRate    Decimal? @db.Decimal(8, 2)
+  regularHours  Decimal  @db.Decimal(8, 2)
+  overtimeHours Decimal  @db.Decimal(8, 2)
+  basePay       Decimal  @db.Decimal(10, 2)
+  overtimePay   Decimal  @db.Decimal(10, 2)
+  bonus         Decimal  @db.Decimal(10, 2)
+  total         Decimal  @db.Decimal(10, 2)
+  createdAt     DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, year, month])
+}
