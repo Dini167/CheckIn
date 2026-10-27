@@ -11,7 +11,6 @@ export default function TeamReportFilters({ filter, setFilter }: { filter: TeamA
                 type="text"
                 placeholder="חפש לפי שם עובד"
                 value={filter.search ?? ""}
-                /* שונה: חיפוש ריק הופך ל-undefined כדי שלא יישלח search= ריק לשרת */
                 onChange={(e) => setFilter({ ...filter, search: e.target.value ? e.target.value : undefined })}
             />
             <select
@@ -42,7 +41,6 @@ export default function TeamReportFilters({ filter, setFilter }: { filter: TeamA
             <option value="clockIn">מיון לפי כניסה</option>
             <option value="workedMinutes">מיון לפי דקות עבודה</option>
             </select>
-            {/* שונה: ASC/DESC הוחלפו ל-asc/desc באותיות קטנות — אלה הערכים שהשרת והטיפוס מקבלים */}
             <select value={filter.order??""} onChange={(e) => setFilter({ ...filter, order: e.target.value ? e.target.value as ("asc" | "desc") : undefined })}>
                 <option value="">ללא סדר</option>
                 <option value="asc">עולה</option>

@@ -10,7 +10,7 @@ import { useAuth } from '../hooks/useAuth';
 import { getHomePath } from '../utils/getHomePath';
 import MySalaryPage from '../pages/employee/MySalaryPage';
 import TeamMembersPage from '../pages/teamLeader/TeamMembersPage';
-
+import TeamReportPage from '../pages/teamLeader/TeamReportPage';
 
 export default function AppRoutes() {
     const { user, token } = useAuth();
@@ -31,6 +31,8 @@ export default function AppRoutes() {
             <Route path="*" element={<Navigate replace to="/" />} />
             <Route path="/team-leader/attendance" element={<ProtectedRoute allowedRole={["TEAM_LEADER"]}>
                 <TeamAttendancePage /></ProtectedRoute>} />
+            <Route path="/team-leader/report" element={<ProtectedRoute allowedRole={["TEAM_LEADER"]}>
+                <TeamReportPage /></ProtectedRoute>} />
         </Routes>
     );
 }
