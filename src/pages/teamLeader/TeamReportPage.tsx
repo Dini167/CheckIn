@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { formatDate } from "../../utils/formatDate";
 import type { TeamAttendanceFilters } from "../../types/attendance";
 import useFetch from "../../hooks/useFetch";
 import { getTeamAttendance } from "../../api/attendanceApi";
@@ -6,7 +7,7 @@ import TeamReportTable from "../../components/attendance/TeamReportTable";
 import TeamReportFilters from "../../components/attendance/TeamReportFilters";
 
 export default function TeamReportPage() {
-    const [filter, setFilter] = useState<TeamAttendanceFilters>({})
+    const [filter, setFilter] = useState<TeamAttendanceFilters>({ from: formatDate)new Date(),to: formatDate(new Date()) })
     const { data, isLoading, error } = useFetch(() => getTeamAttendance(filter), "שגיאה בטעינת דוח צוות", ["teamAttendance", filter]);
     const rows = data ?? [];
     return (
