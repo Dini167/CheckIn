@@ -30,7 +30,7 @@ export async function getTeamAttendance(filter: TeamAttendanceFilters): Promise<
     const response = await axiosInstance.get<TeamAttendanceRow[]>("/attendance/team", { params: filter });
     return response.data;
 }
-export async function getCalendar(month: { month: number }): Promise<MonthCalendar> {
+export async function getCalendar(month: { month: string }): Promise<MonthCalendar> {
     const response = await axiosInstance.get<MonthCalendar>("/attendance/calendar",{params: month});
     return response.data;
 }

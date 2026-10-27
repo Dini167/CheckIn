@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import type { MonthCalendar } from "../../types/attendance";
 import AttendanceStatus from "./AttendanceStatus";
 import ClockInForm from "./ClockInForm";
 import ClockOutForm from "./ClockOutForm";
