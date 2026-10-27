@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 
+
 export default function useFetch<T>(fetchFunction: () => Promise<T>, errorMessage: string) {
     const [data, setData] = useState<T | null>(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -21,3 +22,5 @@ export default function useFetch<T>(fetchFunction: () => Promise<T>, errorMessag
             }, [load]);
     return { data, isLoading, error,refetch: load };
 }
+
+

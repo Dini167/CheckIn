@@ -23,31 +23,32 @@ export interface AttendanceSession {
     minutes: number;
 }
 export interface TeamAttendanceMember {
-  user: { id: number; name: string }; 
-  state: AttendanceState; 
-  location: "OFFICE" | "HOME" | null; 
-  since: string | null; 
-  workedMinutesToday: number; 
+    user: { id: number; name: string };
+    state: AttendanceState;
+    location: "OFFICE" | "HOME" | null;
+    since: string | null;
+    workedMinutesToday: number;
 }
-export interface CalenderDay{
+export interface CalendarDay {
     date: string;
     dayOfWeek: number;
-    status: "PAUSED" | "IN" | "NOT_STARTED" | "ENDED" | "OTHER1" | "OTHER2" | "OTHER3" | "OTHER4" | "OTHER5" | "OTHER6";
+    status:"WORKED"| "IN_PROGRESS"| "MISSING"| "MISSING_EXIT"| "SICK"| "NON_WORKING"
+    | "WEEKEND" | "NOT_STARTED"| "FUTURE"| "BEFORE_JOIN";
     isGap: boolean;
-
-
-
     workedMinutes: number;
-
-
-
     dailySummary: string | null;
-
-
     sessions: AttendanceSession[];
-
-    nonWorkingDay: { type: string; note: string } | null;
-    sickNote: { id: number; status: string } | null;
+    nonWorkingDay: { type: "HOLIDAY" | "VACATION" | "STUDY_DAY"; note: string } | null;
+    sickNote: { id: number; status: "PENDING" | "APPROVED" | "REJECTED" } | null;
 }
-
-
+export interface MonthCalendar {
+    month: string;
+    days: CalendarDay[];
+    gapCount: number;
+    totalWorkedMinutes: number;
+}
+export type TeamAttendanceRow= CalendarDay & {
+    user: { id: number; name: string };
+    firstClockIn: string | null;
+    lastClockOut: string | null;
+}
