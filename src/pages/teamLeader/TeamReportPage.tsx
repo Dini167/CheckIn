@@ -7,7 +7,7 @@ import TeamReportTable from "../../components/attendance/TeamReportTable";
 import TeamReportFilters from "../../components/attendance/TeamReportFilters";
 
 export default function TeamReportPage() {
-    const [filter, setFilter] = useState<TeamAttendanceFilters>({ from: formatDate)new Date(),to: formatDate(new Date()) })
+    const [filter, setFilter] = useState<TeamAttendanceFilters>({ from: formatDate(new Date(new Date().getFullYear(), new Date().getMonth(), 1)), to: formatDate(new Date()) })
     const { data, isLoading, error } = useFetch(() => getTeamAttendance(filter), "שגיאה בטעינת דוח צוות", ["teamAttendance", filter]);
     const rows = data ?? [];
     return (

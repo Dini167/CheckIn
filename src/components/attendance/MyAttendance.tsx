@@ -8,13 +8,9 @@ import AttendanceSessions from "./AttendanceSessions";
 import DailyWorkSummary from "./DailyWorkSummary";
 import type { TodayAttendance } from "../../types/attendance";
 import { getTodayAttendance } from "../../api/attendanceApi";
-import { getCalendar } from "../../api/attendanceApi";
-import useFetch from "../../hooks/useFetch";
 
 export default function MyAttendance() {
-    const [monthCalendar, setMonthCalendar] = useState<MonthCalendar | null>(null);
     const [todayAttendance, setTodayAttendance] = useState<TodayAttendance | null>(null);
-    const {data: monthData, isLoading, error} = useFetch(()=>getCalendar(), "שגיאה בטעינת לוח חודשי", ["monthCalendar"]);
     useEffect(() => {
         const loadAttendance = async () => {
             const attendance = await getTodayAttendance();
@@ -37,3 +33,4 @@ export default function MyAttendance() {
         </div>
     );
 }
+   
