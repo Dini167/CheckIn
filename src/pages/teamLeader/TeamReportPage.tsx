@@ -14,7 +14,7 @@ export default function TeamReportPage() {
             <h1>דוח נוכחות צוותית</h1>
             <TeamReportFilters filter={filter} setFilter={setFilter} />
             {isLoading && <p>טוען דוח נוכחות...</p>}
-            {error && <p style={{ color: 'red' }}>{error.message}</p>}
+            {error && <p style={{ color: 'red' }}>{error}</p>}
             {!isLoading && !error && rows.length === 0 && <p>לא נמצאו דיווחי נוכחות</p>}
             {!isLoading && !error && rows.length > 0 && <TeamReportTable data={rows} />}
         </div>
