@@ -25,5 +25,5 @@ export async function getTeamAttendanceNow(): Promise<TeamAttendanceMember[]> {
     const response = await axiosInstance.get<TeamAttendanceMember[]>("/attendance/team/now");
     return response.data;
 }
-
+export async function getTeamAttendance(): Promise<TeamAttendanceMember[]> {
 
