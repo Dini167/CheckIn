@@ -29,3 +29,25 @@ export interface TeamAttendanceMember {
   since: string | null; 
   workedMinutesToday: number; 
 }
+export interface CalenderDay{
+    date: string;
+    dayOfWeek: number;
+    status: "PAUSED" | "IN" | "NOT_STARTED" | "ENDED" | "OTHER1" | "OTHER2" | "OTHER3" | "OTHER4" | "OTHER5" | "OTHER6";
+    isGap: boolean;
+
+
+
+    workedMinutes: number;
+
+
+
+    dailySummary: string | null;
+
+
+    sessions: AttendanceSession[];
+
+    nonWorkingDay: { type: string; note: string } | null;
+    sickNote: { id: number; status: string } | null;
+}
+
+
