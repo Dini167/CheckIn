@@ -45,7 +45,8 @@
 - `src/utils/handleFormError.ts` — פונקציה אחת במקום ה־catch שחוזר ב־`LoginForm` וב־`RegisterForm`
 - `EmployeeHomePage`: למחוק את `loadAttendance` (זהה ל־`refreshAttendance`) · ‏`const state = todayAttendance?.state`
 - `AttendanceStatus`: ‏`Record<AttendanceState, string>` במקום 4 תנאים
-- `src/hooks/useFetch.ts` (custom hook) — במקום בלוק הטעינה/שגיאה שחוזר בכל דף (אחרי ההגשה)
+- ~~`src/hooks/useFetch.ts` (custom hook)~~ ✅ בוצע
+- **TanStack Query — "דרך א" (מתוכנן ל־28.10 ב־02:00):** להחליף רק את הפנים של `useFetch` ב־`useQuery` + `QueryClientProvider` ב־`main.tsx`. אף דף לא משתנה
 
 ### 📝 אחרי ההגשה (לראיונות)
 - העלאה לאינטרנט (Render + Neon — הוראות ב־`server/START-HERE.md`)
