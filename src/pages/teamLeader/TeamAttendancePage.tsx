@@ -11,9 +11,12 @@ export default function TeamAttendancePage() {
             <h1>נוכחות הצוות</h1>
             {teamAttendance.isLoading && <p>טוען נתוני נוכחות הצוות...</p>}
             {teamAttendance.error && <p style={{ color: 'red' }}>{teamAttendance.error}</p>}
-            {(teamAttendance.data && teamAttendance.data.length > 0) ?
-            <TeamAttendanceList members={teamAttendance.data} />:<p>אין עובדים בצוות</p>
+            {teamAttendance.data && teamAttendance.data.length > 0&& !teamAttendance.isLoading&&!teamAttendance.error &&
+            <TeamAttendanceList members={teamAttendance.data} />
             }
+            {!teamAttendance.isLoading && !teamAttendance.error && (!teamAttendance.data || teamAttendance.data.length === 0) && (
+                <p>אין עובדים בצוות</p>
+            )}
         </div>
     );
     
