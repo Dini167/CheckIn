@@ -1,5 +1,5 @@
 import type { TeamAttendanceRow } from "../../types/attendance";
-
+import { formatMinutes } from "../../utils/formatMinutes";
 export default function TeamReportTable({data}: {data:TeamAttendanceRow[]}) {
     return (
         <div>
@@ -16,12 +16,12 @@ export default function TeamReportTable({data}: {data:TeamAttendanceRow[]}) {
                 </thead>
                 <tbody>
                     {data.map((row) => (
-                        <tr key={`${row.user.id} - ${row.date}`}>
+                        <tr key={`${row.user.id} - ${row.date}`} style={{ backgroundColor: row.isGap ? '#ffe5e5' : undefined }}>
                             <td>{row.user.name}</td>
                             <td>{row.date}</td>
-                            <td>{row.checkIn}</td>
-                            <td>{row.checkOut}</td>
-                            <td>{row.totalHours}</td>
+                            <td>{row?.firstClockIn ? new Date(row.firstClockIn).toLocaleTimeString("he-IL") : "-"}</td>
+                            <td>{row.lastClockOut ? new Date(row.lastClockOut).toLocaleTimeString("he-IL") : "-"}</td>
+                            <td>{formatMinutes(row.workedMinutes)}</td>
                             <td>{row.dailySummary}</td>
                         </tr>
                     ))}
@@ -30,3 +30,6 @@ export default function TeamReportTable({data}: {data:TeamAttendanceRow[]}) {
         </div>
     )
 }
+
+
+
