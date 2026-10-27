@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { TeamAttendanceFilters } from "../../types/attendance";
 import useFetch from "../../hooks/useFetch";
 import { getTeamAttendance } from "../../api/attendanceApi";
+import TeamReportTable from "../../components/attendance/TeamReportTable";
 
 export default function TeamReportPage() {
     const [filter, setFilter] = useState<TeamAttendanceFilters>({})
@@ -10,12 +11,9 @@ export default function TeamReportPage() {
         <div>
             {isLoading && <p>Loading...</p>}
             {error && <p>Error: {error.message}</p>}
-            {data && data.map((row) => (
-                <div key={`${row.user.id} - ${row.date}`}>
-                    <p>{row.user.name}</p>
-                    <p>{row.status}</p>
-                </div>
-            ))}
+            {
+              !error && !isLoading && data && <TeamReportTable data={data} />
+            }
         </div>
     );          
 }
