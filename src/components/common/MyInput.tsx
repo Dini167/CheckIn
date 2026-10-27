@@ -13,7 +13,6 @@ export default function MyInput({ label, error, ...rest }: MyInputProps) {
         <label htmlFor={inputId}>{label}</label>
         <input {...rest} id={inputId} />
         {error && <span>{error}</span>}
-
     </div>
     )
 }

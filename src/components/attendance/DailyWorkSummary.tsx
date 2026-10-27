@@ -1,7 +1,4 @@
 
-
-
-
 export default function DailyWorkSummary({ workedMinutes }: { workedMinutes: number }) {
 return (
     <div>
