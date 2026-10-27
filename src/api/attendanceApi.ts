@@ -1,4 +1,4 @@
-import type { TeamAttendanceFilters } from "../types/attendance";
+import type { MonthCalendar, TeamAttendanceFilters } from "../types/attendance";
 import type { TeamAttendanceMember, TeamAttendanceRow, TodayAttendance } from "../types/attendance";
 import axiosInstance from "./axiosInstance";
 
@@ -30,4 +30,7 @@ export async function getTeamAttendance(filter: TeamAttendanceFilters): Promise<
     const response = await axiosInstance.get<TeamAttendanceRow[]>("/attendance/team", { params: filter });
     return response.data;
 }
-
+export async function getCalendar(): Promise<MonthCalendar> {
+    const response = await axiosInstance.get<MonthCalendar>("/attendance/calendar",{params: {month: new Date().getMonth() + 1}});
+    return response.data;
+}
