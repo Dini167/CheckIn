@@ -11,6 +11,7 @@ import { getHomePath } from '../utils/getHomePath';
 import MySalaryPage from '../pages/employee/MySalaryPage';
 import TeamMembersPage from '../pages/teamLeader/TeamMembersPage';
 import TeamReportPage from '../pages/teamLeader/TeamReportPage';
+import MyAttendancePage from '../pages/employee/MyAttendancePage';
 
 export default function AppRoutes() {
     const { user, token } = useAuth();
@@ -33,6 +34,8 @@ export default function AppRoutes() {
                 <TeamAttendancePage /></ProtectedRoute>} />
             <Route path="/team-leader/report" element={<ProtectedRoute allowedRole={["TEAM_LEADER"]}>
                 <TeamReportPage /></ProtectedRoute>} />
+            <Route path="/employee/attendance" element={<ProtectedRoute allowedRole={["EMPLOYEE","TEAM_LEADER"]}>
+                <MyAttendancePage /></ProtectedRoute>} />
         </Routes>
     );
 }

@@ -13,6 +13,7 @@ export default function EmployeeHomePage() {
             <LiveClock />
             <MyAttendance />
             <Link to="/employee/salary">השכר שלי</Link>
+            <Link to="/employee/attendance">נוכחות שלי</Link>
             <button onClick={logout}>התנתקות</button>
         </div>
     );

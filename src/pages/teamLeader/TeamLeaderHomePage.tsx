@@ -12,6 +12,7 @@ export default function TeamLeaderHomePage() {
             <Link to="/employee/salary">המשכורת שלי</Link>
             <Link to="/team-leader/attendance">מי במשמרת היום</Link>
             <Link to="/team-leader/report">דוח נוכחות</Link>
+            <Link to="/employee/attendance">נוכחות שלי</Link>
             <button onClick={logout}>התנתקות</button>
         </div>
     );
