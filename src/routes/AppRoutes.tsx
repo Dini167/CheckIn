@@ -1,6 +1,7 @@
 
 import { Route, Routes, Navigate } from 'react-router';
 import TeamLeaderHomePage from '../pages/teamLeader/TeamLeaderHomePage';
+import TeamAttendancePage from '../pages/teamLeader/TeamAttendancePage';
 import LoginPage from '../pages/auth/LoginPage';
 import RegisterPage from '../pages/auth/RegisterPage';
 import EmployeeHomePage from '../pages/employee/EmployeeHomePage';
@@ -28,6 +29,8 @@ export default function AppRoutes() {
             <Route path="/employee/salary" element={<ProtectedRoute allowedRole={["EMPLOYEE","TEAM_LEADER"]}>
                 <MySalaryPage /></ProtectedRoute>} />
             <Route path="*" element={<Navigate replace to="/" />} />
+            <Route path="/team-leader/attendance" element={<ProtectedRoute allowedRole={["TEAM_LEADER"]}>
+                <TeamAttendancePage /></ProtectedRoute>} />
         </Routes>
     );
 }
