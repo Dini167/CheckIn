@@ -1,5 +1,5 @@
-
-import type { TeamAttendanceMember, TodayAttendance } from "../types/attendance";
+import type { TeamAttendanceFilters } from "../types/attendance";
+import type { TeamAttendanceMember, TeamAttendanceRow, TodayAttendance } from "../types/attendance";
 import axiosInstance from "./axiosInstance";
 
 export async function getTodayAttendance(): Promise<TodayAttendance> {
@@ -25,5 +25,9 @@ export async function getTeamAttendanceNow(): Promise<TeamAttendanceMember[]> {
     const response = await axiosInstance.get<TeamAttendanceMember[]>("/attendance/team/now");
     return response.data;
 }
-export async function getTeamAttendance(): Promise<TeamAttendanceMember[]> {
+
+export async function getTeamAttendance(filter: TeamAttendanceFilters): Promise<TeamAttendanceRow[]> {
+    const response = await axiosInstance.get<TeamAttendanceRow[]>("/attendance/team", { params: filter });
+    return response.data;
+}
 

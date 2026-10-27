@@ -53,11 +53,11 @@ export type TeamAttendanceRow= CalendarDay & {
     lastClockOut: string | null;
 }
 export interface TeamAttendanceFilters {
-from: string;
-to: string;
-userId: number | null;
-location: "OFFICE" | "HOME" | null;
-search: string;
-sort: string;
-order: "asc" | "desc";
+from?: string;
+to?: string;
+userId?: number ;
+location?: "OFFICE" | "HOME" ;
+search?: string;
+sort?: "date" | "name" | "clockIn" | "workedMinutes";
+order?: "asc" | "desc";
 }
