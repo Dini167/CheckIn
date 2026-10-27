@@ -246,9 +246,9 @@ Authorization: Bearer <token>
 ```
 
 כללי ולידציה:
-- `name`: 2–80 תווים
+- `name`: 2–30 תווים
 - `password`: לפחות 8 תווים, לפחות אות אחת באנגלית ולפחות ספרה אחת
-- `salary`: מספר 0–10000
+- `salary`: מספר 0–1000 (שכר שעתי)
 
 הצלחה `201` — כמו login (מחזיר `token` + `user`, כלומר המשתמש מחובר מיד).
 לראש צוות: `user.team.joinCode` — להציג לו כדי שישלח לעובדים.
@@ -299,7 +299,7 @@ Authorization: Bearer <token>
 ```
 💡 בטופס: textarea עם 2 שורות. ירידת שורה נשלחת כ-`\n`.
 
-#### דופק (רק לעובדים — לא לראש צוות)
+#### דופק (רק לעובדים שעובדים מהבית — לא בעבודה מהמשרד ולא לראש צוות)
 1. כל עוד `state` הוא `IN`, שואלים כל 30–60 שניות: **`GET /api/pulses/current`**
    ```json
    { "pulse": { "id": 7, "question": "על מה את/ה עובד/ת עכשיו?", "openedAt": "...", "expiresAt": "...", "secondsLeft": 154 } }
@@ -551,7 +551,7 @@ Authorization: Bearer <token>
 ```
 עובדים בלי שכר (`salaryMissing: true`) מגיעים ראשונים — לסמן אותם.
 
-**עדכון שכר:** `PATCH /api/team/members/:id/salary` — חובה: `salary` (0–10000)
+**עדכון שכר:** `PATCH /api/team/members/:id/salary` — חובה: `salary` (0–1000)
 ```json
 { "salary": 60 }
 ```

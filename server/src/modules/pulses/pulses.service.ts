@@ -19,20 +19,25 @@ export function expiresAt(pulse: Pick<Pulse, 'scheduledAt'>): Date {
 }
 
 /**
- * A pulse only counts if the employee was clocked in when it fired.
- * If they were on a pause or already out, it is CANCELLED — not a miss.
+ * A pulse only counts if the employee was clocked in from home when it fired.
+ * If they were on a pause, already out or working at the office, it is CANCELLED — not a miss.
  */
-export function pulseStatus(pulse: Pulse, sessions: Pick<AttendanceSession, 'clockIn' | 'clockOut'>[], at = now()): PulseStatus {
+export function pulseStatus(
+  pulse: Pulse,
+  sessions: Pick<AttendanceSession, 'clockIn' | 'clockOut' | 'location'>[],
+  at = now(),
+): PulseStatus {
   if (pulse.answeredAt) return 'ANSWERED';
   if (at < pulse.scheduledAt) return 'SCHEDULED';
-  if (!wasClockedInAt(sessions, pulse.scheduledAt)) return 'CANCELLED';
+  const homeSessions = sessions.filter((s) => s.location === 'HOME');
+  if (!wasClockedInAt(homeSessions, pulse.scheduledAt)) return 'CANCELLED';
   if (at < expiresAt(pulse)) return 'OPEN';
   return 'MISSED';
 }
 
-/** Called on the first clock-in of the day: schedules the day's random checks (employees only). */
+/** Called on the first home clock-in of the day: schedules the day's random checks (employees only). */
 export async function scheduleDailyPulses(event: AppEvents['clockIn']): Promise<void> {
-  if (event.role !== 'EMPLOYEE') return;
+  if (event.role !== 'EMPLOYEE' || event.location !== 'HOME') return;
   const workDate = keyToDb(event.workDate);
   const existing = await prisma.pulse.count({ where: { userId: event.userId, workDate } });
   if (existing > 0) return;
@@ -56,7 +61,7 @@ export async function scheduleDailyPulses(event: AppEvents['clockIn']): Promise<
 async function sessionsOn(userIds: number[], fromKey: string, toKey: string) {
   return prisma.attendanceSession.findMany({
     where: { userId: { in: userIds }, workDate: { gte: keyToDb(fromKey), lte: keyToDb(toKey) } },
-    select: { userId: true, clockIn: true, clockOut: true },
+    select: { userId: true, clockIn: true, clockOut: true, location: true },
   });
 }
 

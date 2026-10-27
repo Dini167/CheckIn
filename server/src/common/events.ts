@@ -1,4 +1,4 @@
-import type { Role } from '@prisma/client';
+import type { Role, WorkLocation } from '@prisma/client';
 
 /**
  * Tiny in-process event bus so modules can react to each other without importing each other.
@@ -6,7 +6,7 @@ import type { Role } from '@prisma/client';
  * Removing the listening module simply means nobody reacts.
  */
 export interface AppEvents {
-  clockIn: { userId: number; role: Role; workDate: string; at: Date; firstOfDay: boolean };
+  clockIn: { userId: number; role: Role; location: WorkLocation; workDate: string; at: Date; firstOfDay: boolean };
 }
 
 type Handler<K extends keyof AppEvents> = (payload: AppEvents[K]) => Promise<void> | void;

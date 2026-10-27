@@ -28,6 +28,6 @@ export const membersQuerySchema = z.object({
 
 export const salarySchema = z
   .object({
-    salary: z.number().min(0, 'שכר לא יכול להיות שלילי').max(10000).openapi({ example: 60 }),
+    salary: z.number().min(0, 'שכר לא יכול להיות שלילי').max(1000, 'שכר שעתי יכול להיות עד 1000').openapi({ example: 60 }),
   })
   .openapi('UpdateSalary');

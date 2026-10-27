@@ -52,7 +52,7 @@ export async function clockIn(user: AuthUser, location: WorkLocation, remarks?: 
     data: { userId: user.id, workDate: keyToDb(workDate), clockIn: at, location, remarks: remarks || null },
   });
 
-  await emit('clockIn', { userId: user.id, role: user.role, workDate, at, firstOfDay: sessions.length === 0 });
+  await emit('clockIn', { userId: user.id, role: user.role, location, workDate, at, firstOfDay: sessions.length === 0 });
   return toSessionDto(session);
 }
 

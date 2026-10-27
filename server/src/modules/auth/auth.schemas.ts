@@ -1,6 +1,6 @@
 import { z } from '../../common/zod';
 
-const name = z.string().trim().min(2, 'שם חייב להכיל לפחות 2 תווים').max(80).openapi({ example: 'נועה כהן' });
+const name = z.string().trim().min(2, 'שם חייב להכיל לפחות 2 תווים').max(30, 'שם יכול להכיל עד 30 תווים').openapi({ example: 'נועה כהן' });
 const email = z
   .email('כתובת אימייל לא תקינה')
   .trim()
@@ -22,7 +22,7 @@ export const registerLeaderSchema = z
     email,
     password,
     teamName: z.string().trim().min(2).max(80).openapi({ example: 'צוות פיתוח' }),
-    salary: z.number().min(0).max(10000).openapi({ example: 75, description: 'שכר שעתי' }),
+    salary: z.number().min(0, 'שכר לא יכול להיות שלילי').max(1000, 'שכר שעתי יכול להיות עד 1000').openapi({ example: 75, description: 'שכר שעתי' }),
   })
   .openapi('RegisterTeamLeader');
 

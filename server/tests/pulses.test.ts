@@ -42,6 +42,17 @@ describe('pulses — scheduling', () => {
     const pulses = await clockInAndGetPulses(leader, MON);
     expect(pulses).toHaveLength(0);
   });
+
+  it('office work gets no pulses; the first home clock-in of the day schedules them', async () => {
+    travelTo(MON, '09:00');
+    await api().post('/api/attendance/clock-in').set(employee.auth).send({ location: 'OFFICE' }).expect(201);
+    expect(await prisma.pulse.count({ where: { userId: employee.id } })).toBe(0);
+
+    travelTo(MON, '12:00');
+    await api().post('/api/attendance/pause').set(employee.auth).send({}).expect(200);
+    await api().post('/api/attendance/clock-in').set(employee.auth).send({ location: 'HOME' }).expect(201);
+    expect(await prisma.pulse.count({ where: { userId: employee.id } })).toBe(2);
+  });
 });
 
 describe('pulses — answering', () => {
@@ -79,6 +90,20 @@ describe('pulses — answering', () => {
     const [first] = await clockInAndGetPulses(employee, MON);
     at(first!.scheduledAt, -2);
     await api().post('/api/attendance/pause').set(employee.auth).send({}).expect(200);
+
+    at(first!.scheduledAt, 10);
+    const mine = await api().get(`/api/pulses/mine?date=${MON}`).set(employee.auth).expect(200);
+    expect(mine.body[0].status).toBe('CANCELLED');
+  });
+
+  it('a check that fires while working at the office is cancelled, not missed', async () => {
+    const [first] = await clockInAndGetPulses(employee, MON);
+    at(first!.scheduledAt, -2);
+    await api().post('/api/attendance/pause').set(employee.auth).send({}).expect(200);
+    await api().post('/api/attendance/clock-in').set(employee.auth).send({ location: 'OFFICE' }).expect(201);
+
+    at(first!.scheduledAt, 1);
+    expect((await api().get('/api/pulses/current').set(employee.auth)).body.pulse).toBeNull();
 
     at(first!.scheduledAt, 10);
     const mine = await api().get(`/api/pulses/mine?date=${MON}`).set(employee.auth).expect(200);
