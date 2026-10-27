@@ -6,7 +6,7 @@ import TeamAttendanceList from "../../components/attendance/TeamAttendanceList";
 import { useEffect } from "react";
 
 export default function TeamAttendancePage() {
-    const teamAttendance=useFetch<TeamAttendanceMember[]>(getTeamAttendanceNow,"שגיאה בקריאת נוכחות הצוות");
+    const teamAttendance=useFetch<TeamAttendanceMember[]>(getTeamAttendanceNow,"שגיאה בקריאת נוכחות הצוות", ["teamNow"]);
     useEffect(() => {
         const interval = setInterval(() => {
             teamAttendance.refetch();

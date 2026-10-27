@@ -3,7 +3,7 @@ import useFetch from '../../hooks/useFetch';
 import { useAuth } from '../../hooks/useAuth';
 
 export default function MySalaryPage() {
-    const { data: salaryData, isLoading, error } = useFetch(getMySalary, "שגיאה בטעינת נתוני השכר");
+    const { data: salaryData, isLoading, error } = useFetch(getMySalary, "שגיאה בטעינת נתוני השכר", ["mySalary"]);
     const {user} = useAuth();
     return (<div>
         <h1>

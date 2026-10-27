@@ -4,7 +4,7 @@ import TeamMembersList from '../../components/team/TeamMembersList';
 import { useAuth } from '../../hooks/useAuth';
 
 export default function TeamMembersPage() {
-    const { data, isLoading, error, refetch } = useFetch(getTeamMembers, "שגיאה בטעינת עובדי הצוות");
+    const { data, isLoading, error, refetch } = useFetch(getTeamMembers, "שגיאה בטעינת עובדי הצוות", ["teamMembers"]);
     const teamMembers = data ?? [];
     const { user } = useAuth();
     return (
