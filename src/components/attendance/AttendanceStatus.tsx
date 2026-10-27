@@ -6,9 +6,10 @@ export default function AttendanceStatus({ state }: { state: AttendanceState }) 
             {state === "IN" ? "נוכח" : ""}
             {state === "PAUSED" ? "בהפסקה" : ""}
             {state === "NOT_STARTED" ? "לא התחיל" : ""}
-            {state === "ENDED" ? "יום העבודה הסתיים. אפשר לחזור לעבוד בכל עת."
+            {state === "ENDED" ? "יום העבודה הסתיים."
 
  : ""}
         </span>
     );
 }
+
