@@ -1,111 +1,561 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+/* =========================================================
+   CheckIn — עיצוב גלובלי
+   עיצוב בלבד: אין שינוי בקוד React. העיצוב נשען על מבנה
+   התגיות הקיים (h1, table, form, ul...) ועל ‎:has()‎.
+   ========================================================= */
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap');
+
+/* ---------- Design tokens ---------- */
+:root {
+  --navy-900: #0f2547;
+  --navy-800: #16325c;
+  --navy-700: #1d3f72;
+  --navy-600: #27508f;
+  --teal-500: #2ec4b6;
+  --teal-100: #e3f8f6;
+  --pink-500: #e94e77;
+
+  --bg: #eef2f8;
+  --surface: #ffffff;
+  --surface-muted: #f6f8fc;
+  --border: #e2e8f2;
+  --border-strong: #cfd8e6;
+
+  --text: #2b3445;
+  --text-muted: #6b7690;
+  --text-strong: #0f2547;
+
+  --danger: #d64545;
+  --danger-bg: #fdecec;
+  --gap-row: #ffe5e5;
+
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(15, 37, 71, 0.06);
+  --shadow: 0 6px 24px rgba(15, 37, 71, 0.08);
+  --shadow-lg: 0 18px 50px rgba(15, 37, 71, 0.18);
+
+  --font: 'Heebo', system-ui, 'Segoe UI', Arial, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+}
+
+html {
+  direction: rtl;
 }
 
 body {
   margin: 0;
+  min-height: 100vh;
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text);
+  background:
+    radial-gradient(1200px 400px at 100% -10%, rgba(46, 196, 182, 0.10), transparent 60%),
+    linear-gradient(180deg, var(--navy-800) 0, var(--navy-800) 220px, var(--bg) 220px);
+  background-repeat: no-repeat;
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
 }
 
+#root {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 40px 20px 64px;
+}
+
+/* ---------- Page = card ---------- */
+#root > div {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 32px 36px 36px;
+  animation: page-in 0.35s ease-out;
+}
+
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------- Typography ---------- */
 h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+h2,
+h3 {
+  color: var(--text-strong);
+  line-height: 1.25;
+  margin: 0 0 16px;
 }
 
 h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
 }
+
+h1::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  width: 64px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--teal-500);
+}
+
 h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
+  font-size: 1.35rem;
+  font-weight: 700;
 }
+
+h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
 p {
+  margin: 0 0 12px;
+}
+
+/* כותרות פנימיות (h1 בתוך קומפוננטה, למשל "זמני העבודה של היום") — קטנות יותר */
+#root > div div h1 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 0;
+  margin: 18px 0 10px;
+  border: none;
+}
+
+#root > div div h1::after {
+  display: none;
+}
+
+/* ---------- Links ---------- */
+a {
+  color: var(--navy-600);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+a:hover {
+  color: var(--teal-500);
+}
+
+/* קישורי ניווט שעומדים ישירות בדף — כפתורי "pill" */
+#root > div > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 8px 0 8px 10px;
+  padding: 9px 20px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--navy-700);
+  font-size: 0.95rem;
+  box-shadow: var(--shadow-sm);
+  transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.15s;
+}
+
+#root > div > a:hover {
+  background: var(--navy-700);
+  border-color: var(--navy-700);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* ---------- Buttons ---------- */
+button {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 10px 22px;
+  margin: 6px 0 6px 8px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--navy-700);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(29, 63, 114, 0.22);
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+
+button:hover:not(:disabled) {
+  background: var(--navy-900);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(29, 63, 114, 0.28);
+}
+
+button:active:not(:disabled) {
+  transform: none;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(46, 196, 182, 0.45);
+  outline-offset: 2px;
+}
+
+/* כפתור ההתנתקות — הכפתור האחרון בדף: סגנון משני */
+#root > div > button:last-child {
+  background: transparent;
+  color: var(--pink-500);
+  border: 1.5px solid currentColor;
+  box-shadow: none;
+}
+
+#root > div > button:last-child:hover {
+  background: var(--pink-500);
+  color: #fff;
+}
+
+/* ---------- Form fields ---------- */
+label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--text);
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: var(--navy-600);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--teal-500);
+  box-shadow: 0 0 0 4px rgba(46, 196, 182, 0.15);
+}
+
+textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+
+select {
+  cursor: pointer;
+}
+
+/* MyInput: div > label + input + span */
+div:has(> label + input) {
+  margin-bottom: 18px;
+}
+
+div:has(> label + input) > span {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: var(--danger);
+}
+
+form > select,
+form > span {
+  margin-bottom: 18px;
+}
+
+form > span {
+  display: block;
+  color: var(--danger);
+  font-size: 0.9rem;
+}
+
+form > button[type='submit'] {
+  width: 100%;
+  margin: 8px 0 0;
+  padding: 13px;
+  font-size: 1.05rem;
+}
+
+/* ---------- Error messages (inline style color: red) ---------- */
+p[style*='red'] {
+  color: var(--danger) !important;
+  background: var(--danger-bg);
+  border-right: 4px solid var(--danger);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-weight: 500;
+}
+
+/* ---------- Tables ---------- */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 16px 0 20px;
+  font-size: 0.95rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+thead th {
+  background: var(--surface-muted);
+  color: var(--navy-700);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-align: right;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+tbody td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr {
+  transition: background 0.12s;
+}
+
+tbody tr:hover {
+  background: #f3f7fd;
+}
+
+/* ---------- Lists (team members, team board, sessions) ---------- */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 20px;
+  display: grid;
+  gap: 10px;
+}
+
+li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  padding: 14px 18px;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+li:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+li button {
+  margin: 0;
+  padding: 7px 16px;
+  font-size: 0.85rem;
+}
+
+li input {
+  width: 140px;
+}
+
+/* ---------- Home: live clock (div שכל תוכנו טקסט + <p>) ---------- */
+#root > div > div:has(> p:only-child) {
+  display: inline-block;
+  margin: 4px 0 24px;
+  padding: 18px 28px;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--navy-700), var(--navy-900));
+  color: var(--teal-500);
+  font-size: 2.2rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  box-shadow: var(--shadow);
+}
+
+#root > div > div:has(> p:only-child) > p {
+  margin: 2px 0 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0;
+}
+
+/* ---------- Home: today's attendance panel ---------- */
+#root > div > div:has(> span) {
+  padding: 22px 24px;
+  margin-bottom: 24px;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+#root > div > div:has(> span) > span:first-child {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--teal-100);
+  color: #128177;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* ---------- Team report: filters toolbar ---------- */
+#root > div > div:has(> select) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px 16px;
+  padding: 18px 20px;
+  margin-bottom: 8px;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+#root > div > div:has(> select) > div {
+  flex: 1 1 180px;
   margin: 0;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+#root > div > div:has(> select) > select {
+  flex: 0 1 180px;
+  width: auto;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+/* ---------- Auth pages (login / register): centered card on navy ---------- */
+body:has(#root > div > form) {
+  background:
+    radial-gradient(900px 500px at 85% 10%, rgba(46, 196, 182, 0.22), transparent 60%),
+    radial-gradient(700px 400px at 10% 90%, rgba(233, 78, 119, 0.14), transparent 60%),
+    linear-gradient(160deg, var(--navy-700), var(--navy-900));
+}
+
+#root:has(> div > form) {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding-top: 24px;
+}
+
+#root > div:has(> form) {
+  width: 100%;
+  max-width: 440px;
+  padding: 40px 36px 28px;
+  box-shadow: var(--shadow-lg);
+}
+
+#root > div:has(> form) > h1 {
+  text-align: center;
+  font-size: 1.7rem;
+}
+
+#root > div:has(> form) > h1::before {
+  content: 'CheckIn';
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: var(--teal-500);
+}
+
+#root > div:has(> form) > h1::after {
+  right: 50%;
+  transform: translateX(50%);
+}
+
+#root > div:has(> form) > p:last-child {
+  margin: 20px 0 0;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 720px) {
+  #root {
+    padding: 16px 12px 40px;
+  }
+
+  #root > div {
+    padding: 22px 18px 26px;
+    border-radius: var(--radius);
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  #root > div > a {
+    margin-left: 6px;
+    padding: 8px 14px;
+  }
+}
+
+/* ---------- Print (דוחות) ---------- */
+@media print {
+  body {
+    background: #fff;
+  }
+
+  #root > div {
+    box-shadow: none;
+    padding: 0;
+  }
+
+  #root > div > a,
+  button {
+    display: none;
+  }
 }
