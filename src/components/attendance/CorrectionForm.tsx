@@ -12,13 +12,21 @@ export default function CorrectionForm({ day, onSuccess }: { day: CalendarDay, o
     const [res, setRes] = useState<CorrectionResult | null>(null);
     const submitCorrection = async (data: { reason: string, newClockIn?: string, newClockOut: string, location?: string }) => {
         const correction: Correction = {
+            ...(day.status == "MISSING" ? {
             workDate: day.date,
             reason: data.reason,
             newClockIn: data.newClockIn,
             newClockOut: data.newClockOut,
             location: data.location,
             ...(day.status == "MISSING" ? {} : { sessionId: day.sessions[day.sessions.length - 1].id })
-        };
+        } : {
+            workDate: day.date,
+            reason: data.reason,
+            newClockIn: data.newClockIn,
+            newClockOut: data.newClockOut,
+            location: data.location,
+            ...(day.status == "MISSING" ? {} : { sessionId: day.sessions[day.sessions.length - 1].id })
+        })
         try {
             const response = await createCorrection(correction);
             setRes(response);
