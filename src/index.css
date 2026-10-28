@@ -401,6 +401,31 @@ li input {
   width: 140px;
 }
 
+/* ---------- Team members: join code chip (הפסקה שמיד אחרי הכותרת) ---------- */
+#root > div:has(ul li button) > h1 + p {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  border: 1.5px dashed var(--teal-500);
+  border-radius: var(--radius-pill);
+  background: var(--teal-100);
+  color: #0f6e66;
+  font-family: var(--mono);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+#root > div:has(ul li button) > h1 + p::before {
+  content: 'קוד הצטרפות לצוות:';
+  font-family: var(--font);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--text-muted);
+}
+
 /* ---------- Home: live clock (div שכל תוכנו טקסט + <p>) ---------- */
 #root > div > div:has(> p:only-child) {
   display: inline-block;
