@@ -17,11 +17,11 @@ export default function MySalaryPage() {
                 <p> ימי עבודה: {salaryData.workedDays}</p>
                 <p>שעות רגילות: {salaryData.regularHours}</p>
                 <p>שעות נוספות: {salaryData.overtimeHours}</p>
-                <p>{salaryData.salaryMissing ? ("נתוני השכר עדיין לא זמינים") : ("")}</p>
-                <p>שכר בסיס: {salaryData.basePay ?? "-"} ₪ </p>
-                <p>תשלום עבור שעות נוספות: {salaryData.overtimePay ?? "-"} ₪ </p>
-                {user?.role === "TEAM_LEADER" && <p>בונוס: {salaryData.bonus ?? "-"} ₪ </p>}
-                <p>שכר כולל: {salaryData.total ?? "-"} ₪ </p>
+                {salaryData.salaryMissing ?? (<p>נתוני השכר עדיין לא זמינים</p>) }
+                <p>שכר בסיס: {salaryData.basePay ? salaryData.basePay + " ₪" : "-"} </p>
+                <p>תשלום עבור שעות נוספות: {salaryData.overtimePay ? salaryData.overtimePay + " ₪" : "-"} </p>
+                {user?.role === "TEAM_LEADER" && <p>בונוס: {salaryData.bonus ? salaryData.bonus + " ₪" : "-"} </p>}
+                <p>שכר כולל: {salaryData.total ? salaryData.total + " ₪" : "-"} </p>
             </div>
         }
     </div>);
