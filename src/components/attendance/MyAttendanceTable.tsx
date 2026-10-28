@@ -26,40 +26,43 @@ const statusLabels: Record<CalendarDay["status"], string> = {
 };
 export default function MyAttendanceTable({ days, onCorrected }: { days: CalendarDay[]; onCorrected: () => void }) {
     const [selectedDay, setSelectedDay] = useState<string | null>(null);
-    const thisDay=(selectedDay == days.find(day => day.date === selectedDay)?.date)? days.find(day => day.date === selectedDay) : null;
-    if (thisDay) {
-        return (<>
-            <table>
-                <thead>
-                    <tr>
-                        <th>תאריך</th>
-                        <th>יום</th>
-                        <th>כניסה</th>
-                        <th>יציאה</th>
-                        <th>סך כל שעות העבודה</th>
-                        <th>סטטוס</th>
-                        <th>תיקון</th>
+    const thisDay = days.find(day => day.date === selectedDay);
+    return (<>
+    {thisDay && <>
+        <CorrectionForm day={thisDay}  onSuccess={() => {onCorrected(); }} />
+        <button onClick={() => setSelectedDay(null)}>סגור</button>
+    </>}
+        <table>
+            <thead>
+                <tr>
+                    <th>תאריך</th>
+                    <th>יום</th>
+                    <th>כניסה</th>
+                    <th>יציאה</th>
+                    <th>סך כל שעות העבודה</th>
+                    <th>סטטוס</th>
+                    <th>תיקון</th>
+                </tr>
+            </thead>
+            <tbody>
+                {days.map((day) => (
+                    <tr key={day.date} style={{ backgroundColor: day.isGap ? '#ffe5e5' : undefined }}>
+                        <td>{day.date}</td>
+                        <td>{weekDays[new Date(day.date).getDay()]}</td>
+                        <td>{day.sessions[0]?.clockInTime ?? "-"}</td>
+                        <td>{day.sessions[day.sessions.length - 1]?.clockOutTime ?? "-"}</td>
+                        <td>{formatMinutes(day.workedMinutes)}</td>
+                        <td>{statusLabels[day.status]}</td>
+                        <td>
+                            {day.isGap && (
+                                <button onClick={() => setSelectedDay(day.date)}>תיקון</button>
+                            )}
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    {days.map((day) => (
-                        <tr key={day.date} style={{ backgroundColor: day.isGap ? '#ffe5e5' : undefined }}>
-                            <td>{day.date}</td>
-                            <td>{weekDays[new Date(day.date).getDay()]}</td>
-                            <td>{day.sessions[0]?.clockInTime ?? "-"}</td>
-                            <td>{day.sessions[day.sessions.length - 1]?.clockOutTime ?? "-"}</td>
-                            <td>{formatMinutes(day.workedMinutes)}</td>
-                            <td>{statusLabels[day.status]}</td>
-                            <td>
-                                {day.isGap && (
-                                    <button onClick={() => setSelectedDay(day.date)}>תיקון</button>
-                                )}
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-           </>  );   
+                ))}
+            </tbody>
+        </table>
+    </>);
 }
 
 

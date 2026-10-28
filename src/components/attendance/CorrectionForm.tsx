@@ -34,7 +34,7 @@ export default function CorrectionForm({ day, onSuccess }: { day: CalendarDay, o
     return (
         <div>
             <h2>טופס תיקון</h2>
-            <form onSubmit={handleSubmit(submitCorrection)}>
+            {!res && <form onSubmit={handleSubmit(submitCorrection)}>
                 <MyInput label="סיבה" type="text" {...register("reason", { required: true })} />
                 {day.status == "MISSING" && (<>
                     <MyInput label="כניסה חדשה" type="time" {...register("newClockIn")} />
@@ -47,9 +47,9 @@ export default function CorrectionForm({ day, onSuccess }: { day: CalendarDay, o
                     </label></>)}
                 <MyInput label="יציאה חדשה" type="time" {...register("newClockOut", { required: true })} />
 
-                <button type="submit">שלח תיקון</button>
+                <button type="submit" disabled={res?true:false}>שלח תיקון</button>
                 {errors.root && <span>{errors.root.message}</span>}
-            </form>
+            </form>}
             {
                 res && (res.status === "APPLIED" ? (
                     <p>התיקון נשמר</p>
