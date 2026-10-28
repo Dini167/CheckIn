@@ -656,6 +656,75 @@ body:has(#root > div > form) {
   color: var(--text-muted);
 }
 
+/* ---------- My attendance: correction form as a popup ----------
+   טופס התיקון (div) וכפתור "סגור" יושבים ממש לפני הטבלה,
+   ולכן מזהים אותם לפי הסדר: div + button + table.
+   הצל הענק של החלון משמש כרקע כהה על כל המסך. */
+body:has(#root > div > div + button + table) {
+  overflow: hidden;
+}
+
+#root > div > div:has(+ button + table) {
+  --modal-w: min(460px, calc(100vw - 32px));
+  position: fixed;
+  top: 12vh;
+  left: 50%;
+  z-index: 100;
+  width: var(--modal-w);
+  max-height: 76vh;
+  overflow-y: auto;
+  padding: 26px 28px 28px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg), 0 0 0 100vmax rgba(15, 37, 71, 0.45);
+  transform: translateX(-50%);
+  animation: modal-in 0.2s ease-out;
+}
+
+@keyframes modal-in {
+  from { opacity: 0; transform: translate(-50%, 12px); }
+  to { opacity: 1; transform: translateX(-50%); }
+}
+
+#root > div > div:has(+ button + table) > h2 {
+  margin-top: 0;
+  padding-left: 72px;
+}
+
+#root > div > div:has(+ button + table) > p {
+  margin: 8px 0 0;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--teal-100);
+  color: var(--navy-800);
+  font-weight: 600;
+}
+
+/* כפתור "סגור" — בפינה השמאלית העליונה של החלון */
+#root > div > div:has(+ button + table) + button {
+  position: fixed;
+  top: calc(12vh + 22px);
+  left: calc(50% - min(230px, calc(50vw - 16px)) + 18px);
+  z-index: 101;
+  margin: 0;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  background: var(--surface-muted);
+  color: var(--navy-700);
+  border: 1px solid var(--border-strong);
+  box-shadow: none;
+  animation: modal-in-btn 0.2s ease-out;
+}
+
+@keyframes modal-in-btn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+#root > div > div:has(+ button + table) + button:hover {
+  background: var(--border);
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 720px) {
   #root {
