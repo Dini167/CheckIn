@@ -1,11 +1,15 @@
 
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
+import { useState } from "react";
 import type { CalendarDay } from "../../types/attendance";
 import MyInput from "../common/MyInput";
-import type{ Correction } from "../../types/correction";
+import type { Correction, CorrectionResult } from "../../types/correction";
+import { createCorrection } from "../../api/correctionsApi";
+import { ApiError } from "../../api/ApiError";
 
 export default function CorrectionForm({ day, onSuccess }: { day: CalendarDay, onSuccess: () => void }) {
-    const {setError, register, handleSubmit, formState: { errors } } = useForm<{ reason: string, newClockIn?: string, newClockOut: string, location?: string }>();
+    const { setError, register, handleSubmit, formState: { errors } } = useForm<{ reason: string, newClockIn?: string, newClockOut: string, location?: string }>();
+    const [res, setRes] = useState<CorrectionResult | null>(null);
     const submitCorrection = async (data: { reason: string, newClockIn?: string, newClockOut: string, location?: string }) => {
         const correction: Correction = {
             workDate: day.date,
@@ -13,16 +17,24 @@ export default function CorrectionForm({ day, onSuccess }: { day: CalendarDay, o
             newClockIn: data.newClockIn,
             newClockOut: data.newClockOut,
             location: data.location,
-            ...(day.status=="MISSING" ? { idSession:0 } : { idSession: day.sessions[-1].id })
+            ...(day.status == "MISSING" ? { sessionId: 0 } : { sessionId: day.sessions[day.sessions.length - 1].id })
         };
-       try{
-            
-       }
+        try {
+            const response = await createCorrection(correction);
+            setRes(response);
+            onSuccess();
+        } catch (error) {
+            if (error instanceof ApiError){
+                setError( "root", { type: "manual", message: error.message });
+            } else {
+                setError( "root", { type: "manual", message: "Unexpected error" });
+            }
+        }
     }
     return (
         <div>
             <h2>טופס תיקון</h2>
-            <form onSubmit={handleSubmit(onSuccess)}>
+            <form onSubmit={handleSubmit(submitCorrection)}>
                 <MyInput label="סיבה" type="text" {...register("reason", { required: true })} />
                 {day.status == "MISSING" && (<>
                     <MyInput label="כניסה חדשה" type="time" {...register("newClockIn")} />
@@ -37,6 +49,11 @@ export default function CorrectionForm({ day, onSuccess }: { day: CalendarDay, o
 
                 <button type="submit">שלח תיקון</button>
             </form>
+             {
+                res && (res.status === "APPLIED" ? (
+                    <p>התיקון נשמר</p>
+                ) : <p>המכסה השבועית נגמרה, והבקשה נשלחה לאישור ראש הצוות</p>)
+            }
         </div>
     )
 }
