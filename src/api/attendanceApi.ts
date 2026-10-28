@@ -11,7 +11,7 @@ export async function clockIn(location: "OFFICE" | "HOME",remark?: string) {
     return response.data;
 }
 export async function clockOut(dailySummary: string) {
-    const response = await axiosInstance.post("/attendance/clock-out", { dailySummary, remark });
+    const response = await axiosInstance.post("/attendance/clock-out", { dailySummary });
     return response.data;
 }
 
