@@ -1,4 +1,5 @@
 
-export function formatMonth(date: Date): string {
-    return date.toLocaleDateString("he-IL", { month: "long", year: "numeric" });
+export function formatMonth(monthKey : string): string {
+    const [year, month] = monthKey .split("-");
+    return `${month}/${year}`;
 }
