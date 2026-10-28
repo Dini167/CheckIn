@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="CheckIn">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3fd9c9"/>
+      <stop offset="1" stop-color="#1fa89c"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#bg)"/>
+  <!-- clock ring, open at the top-right like a check-in sweep -->
+  <path d="M44.5 17.5 A19 19 0 1 0 51 32" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" opacity="0.95"/>
+  <!-- check mark -->
+  <path d="M22 32.5 L29.5 40 L46 23.5" fill="none" stroke="#0f2547" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

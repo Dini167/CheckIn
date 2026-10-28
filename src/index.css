@@ -77,6 +77,78 @@ body {
   padding: 40px 20px 64px;
 }
 
+/* ---------- Top navigation (NavBar) ---------- */
+#root > nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 14px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(8px);
+}
+
+#root > nav::before {
+  content: 'CheckIn';
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding-right: 44px;
+  background: url('/logo.svg') right center / 34px 34px no-repeat;
+  margin-left: 14px;
+  padding-left: 18px;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
+#root > nav a {
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s;
+}
+
+#root > nav a:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+#root > nav a.active {
+  background: #fff;
+  color: var(--navy-800);
+  font-weight: 700;
+}
+
+/* שם המשתמש + התנתקות — נדחפים לקצה השמאלי */
+#root > nav p {
+  margin: 0 auto 0 4px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.9rem;
+}
+
+#root > nav button {
+  margin: 0;
+  padding: 7px 16px;
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  box-shadow: none;
+}
+
+#root > nav button:hover:not(:disabled) {
+  background: var(--pink-500);
+  border-color: var(--pink-500);
+  box-shadow: none;
+}
+
 /* ---------- Page = card ---------- */
 #root > div {
   background: var(--surface);
@@ -555,13 +627,12 @@ body:has(#root > div > form) {
 }
 
 #root > div:has(> form) > h1::before {
-  content: 'CheckIn';
+  content: '';
   display: block;
-  margin-bottom: 6px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.25em;
-  color: var(--teal-500);
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 12px;
+  background: url('/logo.svg') center / contain no-repeat;
 }
 
 #root > div:has(> form) > h1::after {
@@ -601,6 +672,17 @@ body:has(#root > div > form) {
     margin-left: 6px;
     padding: 8px 14px;
   }
+
+  #root > nav::before {
+    width: 100%;
+    margin: 0 0 6px;
+    padding: 0;
+    border: none;
+  }
+
+  #root > nav p {
+    display: none;
+  }
 }
 
 /* ---------- Print (דוחות) ---------- */
@@ -614,6 +696,7 @@ body:has(#root > div > form) {
     padding: 0;
   }
 
+  #root > nav,
   #root > div > a,
   button {
     display: none;
