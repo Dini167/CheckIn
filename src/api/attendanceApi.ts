@@ -6,7 +6,7 @@ export async function getTodayAttendance(): Promise<TodayAttendance> {
     const response = await axiosInstance.get<TodayAttendance>("/attendance/today");
     return response.data;
 }
-export async function clockIn(location: "OFFICE" | "HOME",remarks?: remark) {
+export async function clockIn(location: "OFFICE" | "HOME",remarks?: string) {
     const response = await axiosInstance.post("/attendance/clock-in", { location, remarks });
     return response.data;
 }
