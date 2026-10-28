@@ -6,12 +6,12 @@ export async function getTodayAttendance(): Promise<TodayAttendance> {
     const response = await axiosInstance.get<TodayAttendance>("/attendance/today");
     return response.data;
 }
-export async function clockIn(location: "OFFICE" | "HOME") {
-    const response = await axiosInstance.post("/attendance/clock-in", { location });
+export async function clockIn(location: "OFFICE" | "HOME",remark?: string) {
+    const response = await axiosInstance.post("/attendance/clock-in", { location, remark });
     return response.data;
 }
 export async function clockOut(dailySummary: string) {
-    const response = await axiosInstance.post("/attendance/clock-out", { dailySummary });
+    const response = await axiosInstance.post("/attendance/clock-out", { dailySummary, remark });
     return response.data;
 }
 
