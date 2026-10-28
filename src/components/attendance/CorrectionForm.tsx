@@ -10,15 +10,9 @@ export default function CorrectionForm({ day, onSuccess }: { day: CalendarDay, o
         <div>
             <h2>טופס תיקון</h2>
             <form onSubmit={handleSubmit(onSuccess)}>
-                <label>
-                    סיבה:
-                    <input type="text" {...register("reason", { required: true })} />
-                </label>
+                <MyInput label="סיבה" type="text" {...register("reason", { required: true })} />
                 {day.status == "MISSING" && (<>
-                    <label>
-                        כניסה חדשה:
-                        <input type="time" {...register("newClockIn")} />
-                    </label>
+                    <MyInput label="כניסה חדשה" type="time" {...register("newClockIn")} />
                     <label>
                         מיקום:
                         <select {...register("location")}>
@@ -26,10 +20,7 @@ export default function CorrectionForm({ day, onSuccess }: { day: CalendarDay, o
                             <option value="HOME">בית</option>
                         </select>
                     </label></>)}
-                <label>
-                    יציאה חדשה:
-                    <input type="time" {...register("newClockOut", { required: true })} />
-                </label>
+                <MyInput label="יציאה חדשה" type="time" {...register("newClockOut", { required: true })} />
 
                 <button type="submit">שלח תיקון</button>
             </form>
