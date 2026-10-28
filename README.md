@@ -65,51 +65,51 @@
 
 ### דרישות המערכת
 
-| דרישה | איך זה מתקיים במערכת | איפה בקוד |
+| דרישה | איך זה מתקיים במערכת | איפה רואים את זה |
 |---|---|---|
-| כניסה למערכת | הרשמה והתחברות עם טוקן, שמירת המשתמש והתנתקות | [LoginPage](src/pages/auth/LoginPage.tsx), [RegisterPage](src/pages/auth/RegisterPage.tsx), [AuthContext](src/context/AuthContext.tsx) |
-| שני סוגי משתמשים עם הרשאות שונות | עובד (`EMPLOYEE`) וראש צוות (`TEAM_LEADER`). כל נתיב מוגן לפי תפקיד, והתפריט משתנה לפי התפקיד | [ProtectedRoute](src/routes/ProtectedRoute.tsx), [AppRoutes](src/routes/AppRoutes.tsx), [NavBar](src/components/layout/NavBar.tsx) |
-| אובייקט מרכזי | **דיווח נוכחות** (`AttendanceSession`) | [types/attendance.ts](src/types/attendance.ts) |
-| לפחות 5 שדות משמעותיים | תאריך, שעת כניסה, שעת יציאה, מיקום, הערה, סיכום יומי, סוג סיום, דקות עבודה | [types/attendance.ts](src/types/attendance.ts) |
-| קטגוריה / סוג / סטטוס | **מיקום** (משרד / בית) ו**סטטוס יום** (נוכח, חסר, יציאה חסרה, מחלה, חג ועוד) | [MyAttendanceTable](src/components/attendance/MyAttendanceTable.tsx) |
-| רשימת אובייקטים | טבלת "הנוכחות שלי", דוח הצוות ורשימת זמני העבודה של היום | [MyAttendanceTable](src/components/attendance/MyAttendanceTable.tsx), [TeamReportTable](src/components/attendance/TeamReportTable.tsx), [AttendanceSessions](src/components/attendance/AttendanceSessions.tsx) |
-| הוספה ועריכה | **הוספה:** כניסה לעבודה, והשלמת יום חסר. **עריכה:** תיקון שעת יציאה ועדכון שכר עובד | [ClockInForm](src/components/attendance/ClockInForm.tsx), [CorrectionForm](src/components/attendance/CorrectionForm.tsx), [EditSalaryForm](src/components/team/EditSalaryForm.tsx) |
-| חיפוש, סינון או מיון | בדוח הצוות: **חיפוש** לפי שם, **סינון** לפי טווח תאריכים ומיקום, **מיון** לפי תאריך, שם, שעת כניסה או שעות, בסדר עולה או יורד | [TeamReportFilters](src/components/attendance/TeamReportFilters.tsx), [TeamReportPage](src/pages/teamLeader/TeamReportPage.tsx) |
-| מידע שמגיע משרת ונשמר במסד נתונים | כל המידע מגיע מ־API של השרת ונשמר ב־PostgreSQL | [src/api](src/api), [ריפו השרת](https://github.com/Dini167/CheckIn-server) |
+| כניסה למערכת | הרשמה והתחברות עם טוקן, שמירת המשתמש והתנתקות | מסך **התחברות**, מסך **הרשמה**, כפתור **התנתקות** בתפריט |
+| שני סוגי משתמשים עם הרשאות שונות | עובד וראש צוות. כל מסך מוגן לפי תפקיד, והתפריט משתנה לפי התפקיד | **התפריט העליון** — לראש צוות יש 3 מסכים נוספים. עובד שמנסה להיכנס למסך של ראש צוות מועבר לדף הבית שלו |
+| אובייקט מרכזי | **דיווח נוכחות** | **דף הבית** ← "זמני העבודה של היום" |
+| לפחות 5 שדות משמעותיים | תאריך, שעת כניסה, שעת יציאה, מיקום, הערה, סיכום יומי, סוג סיום, דקות עבודה | **דוח נוכחות** (ראש צוות) |
+| קטגוריה / סוג / סטטוס | **מיקום** (משרד / בית) ו**סטטוס יום** (נוכח, חסר, יציאה חסרה, מחלה, חג ועוד) | **הנוכחות שלי** ← עמודת סטטוס · **דף הבית** ← כפתורי כניסה מהמשרד / מהבית |
+| רשימת אובייקטים | טבלאות נוכחות ורשימת זמני העבודה של היום | **הנוכחות שלי**, **דוח נוכחות**, **דף הבית** |
+| הוספה ועריכה | **הוספה:** כניסה לעבודה, והשלמת יום חסר. **עריכה:** תיקון שעת יציאה ועדכון שכר עובד | **דף הבית** ← כניסה · **הנוכחות שלי** ← כפתור "תיקון" · **ניהול עובדים** ← "ערוך שכר" |
+| חיפוש, סינון או מיון | **חיפוש** לפי שם, **סינון** לפי טווח תאריכים ומיקום, **מיון** לפי תאריך, שם, שעת כניסה או שעות, בסדר עולה או יורד | **דוח נוכחות** (ראש צוות) |
+| מידע שמגיע משרת ונשמר במסד נתונים | כל המידע מגיע מהשרת ונשמר ב־PostgreSQL | בכל המסכים — הנתונים נשמרים גם אחרי רענון ובכניסה ממחשב אחר |
 
 **לדוגמה:** ראש צוות רואה את כל עובדי הצוות שלו ואת הדוחות שלהם, ועובד רואה רק את הנוכחות והשכר שלו.
 
 ### חובה ב־React
 
-| דרישה | איך זה מתקיים | איפה בקוד |
+| דרישה | איך זה מתקיים | איפה רואים את זה |
 |---|---|---|
-| React + TypeScript | כל הפרויקט ב־TypeScript, עם טיפוסים לכל מבנה נתונים שמגיע מהשרת | [src/types](src/types) |
-| React Router | נתיבים לכל מסך, נתיבים מוגנים לפי תפקיד, הפניות (`Navigate`) וניווט עם `NavLink` | [AppRoutes](src/routes/AppRoutes.tsx), [ProtectedRoute](src/routes/ProtectedRoute.tsx), [NavBar](src/components/layout/NavBar.tsx) |
-| React Hook Form | טפסי התחברות, הרשמה ותיקון שעות. טופס ההרשמה מחולק לקומפוננטות שדות לפי התפקיד | [LoginForm](src/components/auth/LoginForm.tsx), [RegisterForm](src/components/auth/RegisterForm.tsx), [CorrectionForm](src/components/attendance/CorrectionForm.tsx) |
-| React Query | `QueryClientProvider` ברמת האפליקציה, ו־hook משותף מבוסס `useQuery`. ה־`queryKey` כולל את הסינון, כך שהדוח נטען מחדש כשמשנים סינון | [main.tsx](src/main.tsx), [useFetch](src/hooks/useFetch.ts) |
-| Redux Toolkit / Context | **Context** למשתמש המחובר ולטוקן, עם hook ייעודי שמוודא שימוש בתוך ה־Provider | [AuthContext](src/context/AuthContext.tsx), [useAuth](src/hooks/useAuth.ts) |
+| React + TypeScript | כל הפרויקט ב־TypeScript, עם טיפוסים לכל מבנה נתונים שמגיע מהשרת | בכל הקוד |
+| React Router | נתיב לכל מסך, מסכים מוגנים לפי תפקיד, הפניות אוטומטיות וניווט בתפריט | **התפריט העליון** · כתובת לא קיימת מחזירה לדף הבית |
+| React Hook Form | טפסי התחברות, הרשמה ותיקון שעות. טופס ההרשמה משתנה לפי התפקיד שנבחר | מסך **התחברות**, מסך **הרשמה**, **הנוכחות שלי** ← טופס תיקון |
+| React Query | טעינת כל הנתונים מהשרת דרך hook משותף. כשמשנים סינון בדוח, הנתונים נטענים מחדש אוטומטית | **הנוכחות שלי**, **השכר שלי**, **ניהול עובדים**, **מי במשמרת**, **דוח נוכחות** |
+| Redux Toolkit / Context | **Context** שמחזיק את המשתמש המחובר ואת הטוקן | **התפריט העליון** — שם המשתמש · שמירת ההתחברות אחרי רענון |
 
 ### חשוב להקפיד על
 
-| נושא | איך זה מתקיים | איפה בקוד |
+| נושא | איך זה מתקיים | איפה רואים את זה |
 |---|---|---|
-| חלוקה נכונה לקומפוננטות | **`pages`** — מסכים מלאים עם נתיב. **`components`** — חלקים לשימוש חוזר, מחולקים לפי נושא (`auth`, `attendance`, `team`, `layout`, `common`) | [src/pages](src/pages), [src/components](src/components) |
-| שימוש נכון ב־State וב־Props | לדוגמה, בדוח הצוות ה־state של הסינון נמצא בדף, ועובר כ־props גם לרכיב הסינון (`setFilter`) וגם לטבלה (`data`) | [TeamReportPage](src/pages/teamLeader/TeamReportPage.tsx) |
-| שימוש ב־Hooks | `useState`, `useEffect`, `useId`, ו־hooks מותאמים: `useAuth` ו־`useFetch` | [src/hooks](src/hooks), [MyInput](src/components/common/MyInput.tsx), [LiveClock](src/components/attendance/LiveClock.tsx) |
-| Routing בין עמודים | ניווט בין כל המסכים, הפניה אוטומטית לדף הבית לפי התפקיד, וחסימת נתיבים לא מורשים | [AppRoutes](src/routes/AppRoutes.tsx), [getHomePath](src/utils/getHomePath.ts) |
-| טפסים עם Validation | שדות חובה, אימייל, סיסמה של 8 תווים לפחות, שכר בין 0 ל־1000. הודעות שגיאה מוצגות ליד כל שדה, ושגיאות מהשרת מוצגות בטופס | [UserFields](src/components/auth/UserFields.tsx), [TeamLeaderFields](src/components/auth/TeamLeaderFields.tsx), [MyInput](src/components/common/MyInput.tsx) |
-| קריאות מסודרות לשרת | כל הקריאות בתיקיית `api`, קובץ לכל תחום. מופע `axios` אחד מוסיף טוקן לכל בקשה, ומטפל בשגיאות במקום אחד | [src/api](src/api), [axiosInstance](src/api/axiosInstance.ts) |
-| הצגת Loading בזמן טעינה | הודעת טעינה בדפים שטוענים נתונים, וכפתורים מושבתים בזמן שליחה | [MyAttendancePage](src/pages/employee/MyAttendancePage.tsx), [TeamReportPage](src/pages/teamLeader/TeamReportPage.tsx), [ClockInForm](src/components/attendance/ClockInForm.tsx) |
-| טיפול בשגיאות | מחלקת `ApiError` להודעות מהשרת, הודעות שגיאה למשתמש, והתנתקות אוטומטית כשהטוקן פג | [ApiError](src/api/ApiError.ts), [axiosInstance](src/api/axiosInstance.ts) |
-| מניעת שכפול קוד | קומפוננטת קלט אחת לכל הטפסים, hook אחד לכל טעינות הנתונים, ופונקציות עזר משותפות | [MyInput](src/components/common/MyInput.tsx), [useFetch](src/hooks/useFetch.ts), [src/utils](src/utils) |
-| בלי קומפוננטה אחת גדולה | המערכת מחולקת ל־9 דפים ול־24 קומפוננטות קטנות, כל אחת עם תפקיד אחד | [src/components](src/components) |
+| חלוקה נכונה לקומפוננטות | מסכים מלאים מופרדים מחלקים לשימוש חוזר, וכל חלק עם תפקיד אחד | למשל **דוח נוכחות** בנוי משלושה חלקים: סינון, טבלה ודף שמחבר ביניהם |
+| שימוש נכון ב־State וב־Props | הסינון נשמר בדף ועובר גם לרכיב הסינון וגם לטבלה | **דוח נוכחות** |
+| שימוש ב־Hooks | `useState`, `useEffect`, `useId`, ו־hooks שכתבתי: `useAuth` ו־`useFetch` | **דף הבית** ← שעון חי · כל המסכים שטוענים נתונים |
+| Routing בין עמודים | ניווט בין כל המסכים, הפניה אוטומטית לדף הבית לפי התפקיד, וחסימת מסכים לא מורשים | **התפריט העליון** |
+| טפסים עם Validation | שדות חובה, אימייל, סיסמה של 8 תווים לפחות, שכר בין 0 ל־1000. הודעת שגיאה ליד כל שדה, ושגיאות מהשרת מוצגות בטופס | מסך **הרשמה** — לנסות לשלוח טופס ריק או סיסמה קצרה |
+| קריאות מסודרות לשרת | כל הקריאות לשרת מרוכזות במקום אחד, קובץ לכל תחום, והטוקן מתווסף לכל בקשה אוטומטית | בכל המסכים |
+| הצגת Loading בזמן טעינה | הודעת טעינה בזמן שהנתונים נטענים, וכפתורים מושבתים בזמן שליחה | **הנוכחות שלי**, **דוח נוכחות**, **דף הבית** ← כפתורי כניסה |
+| טיפול בשגיאות | הודעות שגיאה ברורות מהשרת, והתנתקות אוטומטית כשההתחברות פגה | מסך **התחברות** — לנסות סיסמה שגויה |
+| מניעת שכפול קוד | רכיב קלט אחד לכל הטפסים, hook אחד לטעינת נתונים, ופונקציות עזר משותפות | כל שדות הטפסים באתר נראים ומתנהגים אותו דבר |
+| בלי קומפוננטה אחת גדולה | המערכת מחולקת ל־9 מסכים ול־24 קומפוננטות קטנות | — |
 
 ### הגשה
 
 | דרישה | מצב |
 |---|---|
-| קוד בגיט, בלי `node_modules` | ✅ שני ריפואים: [לקוח](https://github.com/Dini167/CheckIn-client) ו[שרת](https://github.com/Dini167/CheckIn-server). `node_modules` מוחרג ב־`.gitignore` |
-| העלאה לענן: שרת, לקוח ומסד נתונים | ✅ **לקוח** — Render (Static Site) · **שרת** — Render (Web Service) · **מסד נתונים** — PostgreSQL ב־Neon |
+| קוד בגיט, בלי `node_modules` | ✅ שני ריפואים: [לקוח](https://github.com/Dini167/CheckIn-client) ו[שרת](https://github.com/Dini167/CheckIn-server) |
+| העלאה לענן: שרת, לקוח ומסד נתונים | ✅ **לקוח** — Render · **שרת** — Render · **מסד נתונים** — PostgreSQL ב־Neon |
 
 ---
 
