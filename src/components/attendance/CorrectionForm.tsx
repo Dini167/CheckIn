@@ -1,5 +1,5 @@
 
-import {  useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useState } from "react";
 import type { CalendarDay } from "../../types/attendance";
 import MyInput from "../common/MyInput";
@@ -12,21 +12,20 @@ export default function CorrectionForm({ day, onSuccess }: { day: CalendarDay, o
     const [res, setRes] = useState<CorrectionResult | null>(null);
     const submitCorrection = async (data: { reason: string, newClockIn?: string, newClockOut: string, location?: string }) => {
         const correction: Correction = {
-            ...(day.status == "MISSING" ? {
-            workDate: day.date,
-            reason: data.reason,
-            newClockIn: data.newClockIn,
-            newClockOut: data.newClockOut,
-            location: data.location,
-            ...(day.status == "MISSING" ? {} : { sessionId: day.sessions[day.sessions.length - 1].id })
-        } : {
-            workDate: day.date,
-            reason: data.reason,
-            newClockIn: day.sessions[0]?.clockInTime,
-            newClockOut: data.newClockOut,
-            location: data.location,
-            ...(day.status == "MISSING" ? {} : { sessionId: day.sessions[day.sessions.length - 1].id })
-        })
+            ...day.status == "MISSING" ? {
+                workDate: day.date,
+                reason: data.reason,
+                newClockIn: data.newClockIn,
+                newClockOut: data.newClockOut,
+                location: data.location,
+            } : {
+                workDate: day.date,
+                reason: data.reason,
+                sessionId: day.sessions.find(s => s.clockOutTime === null)?.id,
+                newClockOut: data.newClockOut,
+            }
+
+        }
         try {
             const response = await createCorrection(correction);
             setRes(response);
@@ -35,7 +34,7 @@ export default function CorrectionForm({ day, onSuccess }: { day: CalendarDay, o
             if (error instanceof ApiError) {
                 setError("root", { type: "server", message: error.message });
             } else {
-                setError("root", { type: "server", message:"אירעה תקלה. יש לנסות שוב." });
+                setError("root", { type: "server", message: "אירעה תקלה. יש לנסות שוב." });
             }
         }
     }
@@ -55,7 +54,7 @@ export default function CorrectionForm({ day, onSuccess }: { day: CalendarDay, o
                     </label></>)}
                 <MyInput label="יציאה חדשה" type="time" {...register("newClockOut", { required: true })} />
 
-                <button type="submit" disabled={res?true:false}>שלח תיקון</button>
+                <button type="submit" disabled={res ? true : false}>שלח תיקון</button>
                 {errors.root && <span>{errors.root.message}</span>}
             </form>}
             {

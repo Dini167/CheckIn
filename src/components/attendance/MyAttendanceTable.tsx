@@ -28,10 +28,10 @@ export default function MyAttendanceTable({ days, onCorrected }: { days: Calenda
     const [selectedDay, setSelectedDay] = useState<string | null>(null);
     const thisDay = days.find(day => day.date === selectedDay);
     return (<>
-    {thisDay && <>
-        <CorrectionForm day={thisDay}  onSuccess={() => {onCorrected(); }} />
-        <button onClick={() => setSelectedDay(null)}>סגור</button>
-    </>}
+        {thisDay && <>
+            <CorrectionForm key={thisDay.date} day={thisDay} onSuccess={() => { onCorrected(); }} />
+            <button onClick={() => setSelectedDay(null)}>סגור</button>
+        </>}
         <table>
             <thead>
                 <tr>
