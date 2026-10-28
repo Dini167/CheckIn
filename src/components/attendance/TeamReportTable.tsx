@@ -12,6 +12,7 @@ export default function TeamReportTable({data}: {data:TeamAttendanceRow[]}) {
                         <th>יציאה</th>
                         <th>סה"כ שעות</th>
                         <th>סיכום יומי</th>
+                        <th>הערות</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,6 +24,10 @@ export default function TeamReportTable({data}: {data:TeamAttendanceRow[]}) {
                             <td>{row.lastClockOut ? new Date(row.lastClockOut).toLocaleTimeString("he-IL") : "-"}</td>
                             <td>{formatMinutes(row.workedMinutes)}</td>
                             <td>{row.dailySummary}</td>
+                            <td>{row.sessions.length==0?'-':row.sessions.map((session) => (
+                                session.remarks?<><div>{session.clockInTime} - {session.clockOutTime}</div>
+                                <div key={session.id }>{session.remarks}</div></>  : '-'
+                            ))}</td>
                         </tr>
                     ))}
                 </tbody>
