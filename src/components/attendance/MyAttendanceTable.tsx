@@ -38,11 +38,11 @@ export default function MyAttendanceTable({ days }: { days: CalendarDay[] }) {
             </thead>
             <tbody>
                 {days.map((day) => (
-                    <tr key={day.date}>
-                        <td>{day.date} תאריך</td>
-                        <td>{weekDays[new Date(day.date).getDay()]} יום</td>
+                    <tr key={day.date} style={{ backgroundColor: day.isGap ? '#ffe5e5' : undefined }}>
+                        <td>{day.date}</td>
+                        <td>{weekDays[new Date(day.date).getDay()]}</td>
                         <td>{day.sessions[0]?.clockInTime ?? "-"}</td>
-                        <td>{day.sessions[0]?.clockOutTime ?? "-"}</td>      
+                        <td>{day.sessions[day.sessions.length - 1]?.clockOutTime ?? "-"}</td>      
                         <td>{formatMinutes(day.workedMinutes)}</td>
                         <td>{statusLabels[day.status]}</td>
                     </tr>
