@@ -1,5 +1,5 @@
 
-import { set, useForm } from "react-hook-form";
+import {  useForm } from "react-hook-form";
 import { useState } from "react";
 import type { CalendarDay } from "../../types/attendance";
 import MyInput from "../common/MyInput";
@@ -17,17 +17,17 @@ export default function CorrectionForm({ day, onSuccess }: { day: CalendarDay, o
             newClockIn: data.newClockIn,
             newClockOut: data.newClockOut,
             location: data.location,
-            ...(day.status == "MISSING" ? { sessionId: 0 } : { sessionId: day.sessions[day.sessions.length - 1].id })
+            ...(day.status == "MISSING" ? {} : { sessionId: day.sessions[day.sessions.length - 1].id })
         };
         try {
             const response = await createCorrection(correction);
             setRes(response);
             onSuccess();
         } catch (error) {
-            if (error instanceof ApiError){
-                setError( "root", { type: "manual", message: error.message });
+            if (error instanceof ApiError) {
+                setError("root", { type: "server", message: error.message });
             } else {
-                setError( "root", { type: "manual", message: "Unexpected error" });
+                setError("root", { type: "server", message:"אירעה תקלה. יש לנסות שוב." });
             }
         }
     }
@@ -48,8 +48,9 @@ export default function CorrectionForm({ day, onSuccess }: { day: CalendarDay, o
                 <MyInput label="יציאה חדשה" type="time" {...register("newClockOut", { required: true })} />
 
                 <button type="submit">שלח תיקון</button>
+                {errors.root && <span>{errors.root.message}</span>}
             </form>
-             {
+            {
                 res && (res.status === "APPLIED" ? (
                     <p>התיקון נשמר</p>
                 ) : <p>המכסה השבועית נגמרה, והבקשה נשלחה לאישור ראש הצוות</p>)

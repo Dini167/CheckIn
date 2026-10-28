@@ -30,7 +30,7 @@ export default function MyAttendancePage() {
         <button onClick={()=> changeMonth(-1)}>לנתונים של החודש הקודם</button>
         <button onClick={()=> changeMonth(1)}>לנתונים של החודש הבא</button>
         {resMyCalender && <>
-            <MyAttendanceTable days={resMyCalender.days}  />
+            <MyAttendanceTable days={resMyCalender.days} onCorrected={refetchCalendar} />
             <p>{formatMinutes(resMyCalender.totalWorkedMinutes)} סך כל שעות העבודה בחודש</p>
             <p>{resMyCalender.gapCount} ימים עם חסר בדיווח</p>
         </>}

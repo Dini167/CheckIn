@@ -1,5 +1,6 @@
 import type { CalendarDay } from "../../types/attendance";
 import { formatMinutes } from "../../utils/formatMinutes";
+import { useState } from "react";
 
 const weekDays = [
     "ראשון",
@@ -22,8 +23,8 @@ const statusLabels: Record<CalendarDay["status"], string> = {
     "FUTURE": "עתידי",
     "BEFORE_JOIN": "לפני הצטרפות"
 };
-export default function MyAttendanceTable({ days }: { days: CalendarDay[] }) {
-
+export default function MyAttendanceTable({ days, onCorrected }: { days: CalendarDay[]; onCorrected: () => void }) {
+const [selectedDay, setSelectedDay] = useState<string | null>(null);
     return (
         <table>
             <thead>
@@ -34,6 +35,7 @@ export default function MyAttendanceTable({ days }: { days: CalendarDay[] }) {
                     <th>יציאה</th>
                     <th>סך כל שעות העבודה</th>
                     <th>סטטוס</th>
+                    <th>תיקון</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,6 +47,11 @@ export default function MyAttendanceTable({ days }: { days: CalendarDay[] }) {
                         <td>{day.sessions[day.sessions.length - 1]?.clockOutTime ?? "-"}</td>      
                         <td>{formatMinutes(day.workedMinutes)}</td>
                         <td>{statusLabels[day.status]}</td>
+                        <td>
+                            {day.isGap && (
+                                <button onClick={() => setSelectedDay(day.date)}>תיקון</button>
+                            )}
+                        </td>
                     </tr>
                 ))}
             </tbody>
