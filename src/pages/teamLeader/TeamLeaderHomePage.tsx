@@ -6,7 +6,7 @@ export default function TeamLeaderHomePage() {
     const { logout } = useAuth();
     return (
         <div>
-            <h1>Team Leader Home Page</h1>
+            <h1>דף הבית - ראש צוות</h1>
             <Link to="/team-leader/members">ניהול עובדי הצוות</Link>
             <MyAttendance />
             <Link to="/employee/salary">המשכורת שלי</Link>

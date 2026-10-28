@@ -8,7 +8,7 @@ export default function EmployeeHomePage() {
     const { logout,user } = useAuth();
     return (
         <div>
-            <h1>Employee Home Page</h1>
+            <h1>דף הבית</h1>
             <h2>שלום, {user?.name}</h2>
             <LiveClock />
             <MyAttendance />
