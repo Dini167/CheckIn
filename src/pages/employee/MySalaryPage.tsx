@@ -11,17 +11,18 @@ export default function MySalaryPage() {
         </h1>
         {isLoading && <p>טוען נתוני שכר...</p>}
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        {(salaryData && !isLoading && !error) && (salaryData.salaryMissing ? ("נתוני השכר עדיין לא זמינים") : (
+        {salaryData && !isLoading && !error&& 
             <div>
                 <p>חודש: {salaryData.month}</p>
                 <p> ימי עבודה: {salaryData.workedDays}</p>
                 <p>שעות רגילות: {salaryData.regularHours}</p>
                 <p>שעות נוספות: {salaryData.overtimeHours}</p>
-                <p>שכר בסיס: {salaryData.basePay ?? "-"}</p>
-                <p>תשלום עבור שעות נוספות: {salaryData.overtimePay ?? "-"}</p>
-                {user?.role === "TEAM_LEADER" && <p>בונוס: {salaryData.bonus ?? "-"}</p>}
-                <p>שכר כולל: {salaryData.total ?? "-"}</p>
+                <p>{salaryData.salaryMissing ? ("נתוני השכר עדיין לא זמינים") : ("")}</p>
+                <p>שכר בסיס: {salaryData.basePay ?? "-"} ₪ </p>
+                <p>תשלום עבור שעות נוספות: {salaryData.overtimePay ?? "-"} ₪ </p>
+                {user?.role === "TEAM_LEADER" && <p>בונוס: {salaryData.bonus ?? "-"} ₪ </p>}
+                <p>שכר כולל: {salaryData.total ?? "-"} ₪ </p>
             </div>
-        ))}
+        }
     </div>);
 }
