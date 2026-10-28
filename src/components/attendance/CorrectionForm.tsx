@@ -22,7 +22,7 @@ export default function CorrectionForm({ day, onSuccess }: { day: CalendarDay, o
         } : {
             workDate: day.date,
             reason: data.reason,
-            newClockIn: data.newClockIn,
+            newClockIn: day.sessions[0]?.clockInTime,
             newClockOut: data.newClockOut,
             location: data.location,
             ...(day.status == "MISSING" ? {} : { sessionId: day.sessions[day.sessions.length - 1].id })
