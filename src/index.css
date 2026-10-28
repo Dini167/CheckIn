@@ -442,17 +442,17 @@ tbody tr:hover {
    CSS לא יכול לבחור תא לפי הטקסט שבו, ולכן:
    - כל סטטוס = תגית אפורה-כחלחלה ("סוף שבוע", "עבד"...)
    - שורה עם חור בדיווח (מקבלת background מ-React) = תגית אדומה */
-#root > div > table td:last-child {
+#root > div > table td:nth-child(6) {
   white-space: nowrap;
 }
 
-#root > div > table tbody td:last-child {
+#root > div > table tbody td:nth-child(6) {
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--navy-700);
 }
 
-#root > div > table tbody tr td:last-child::before {
+#root > div > table tbody tr td:nth-child(6)::before {
   content: '';
   display: inline-block;
   width: 8px;
@@ -463,13 +463,22 @@ tbody tr:hover {
   vertical-align: middle;
 }
 
-#root > div > table tbody tr[style*='background'] td:last-child {
+#root > div > table tbody tr[style*='background'] td:nth-child(6) {
   color: var(--danger);
 }
 
-#root > div > table tbody tr[style*='background'] td:last-child::before {
+#root > div > table tbody tr[style*='background'] td:nth-child(6)::before {
   background: var(--danger);
   box-shadow: 0 0 0 3px rgba(214, 69, 69, 0.18);
+}
+
+/* עמודת "תיקון" — כפתור קטן */
+#root > div > table td:nth-child(7) button {
+  margin: 0;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  background: var(--danger);
+  box-shadow: none;
 }
 
 /* ---------- Lists (team members, team board, sessions) ---------- */
