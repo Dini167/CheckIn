@@ -5,7 +5,7 @@ export interface Correction {
     newClockIn?: string;
     newClockOut?: string;
     location?: string;
-    sessionId?:number;
+    sessionId?: number;
 }
 export interface CorrectionQuota {
     unlimited: boolean;
@@ -16,4 +16,16 @@ export interface CorrectionQuota {
 }
 export interface CorrectionResult {
     status: "APPLIED" | "PENDING";
+}
+export interface TeamCorrection {
+    id: number;
+    user: {
+        id: number;
+        name: string;
+    }
+    workDate: string;
+    newClockInTime?: string| null;
+    newClockOutTime?: string| null;
+    reason?: string;
+    status: "PENDING" | "APPROVED" | "REJECTED";
 }
