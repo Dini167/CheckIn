@@ -2,6 +2,7 @@ import type { CalendarDay } from "../../types/attendance";
 import { formatMinutes } from "../../utils/formatMinutes";
 import { useState } from "react";
 import CorrectionForm from "./CorrectionForm";
+import SickNoteForm from "./SickNoteForm";
 
 const weekDays = [
     "ראשון",
@@ -26,10 +27,13 @@ const statusLabels: Record<CalendarDay["status"], string> = {
 };
 export default function MyAttendanceTable({ days, onCorrected }: { days: CalendarDay[]; onCorrected: () => void }) {
     const [selectedDay, setSelectedDay] = useState<string | null>(null);
+    const [formType, setFormType] = useState<"correction" | "sick">("correction");
     const thisDay = days.find(day => day.date === selectedDay);
     return (<>
         {thisDay && <>
-            <CorrectionForm key={thisDay.date} day={thisDay} onSuccess={() => { onCorrected(); }} />
+            {formType === "correction"
+                ? <CorrectionForm key={thisDay.date} day={thisDay} onSuccess={() => { onCorrected(); }} />
+                : <SickNoteForm key={thisDay.date} day={thisDay} onSuccess={() => { onCorrected(); }} />}
             <button onClick={() => setSelectedDay(null)}>סגור</button>
         </>}
         <table>
@@ -55,7 +59,10 @@ export default function MyAttendanceTable({ days, onCorrected }: { days: Calenda
                         <td>{statusLabels[day.status]}</td>
                         <td>
                             {day.isGap && (
-                                <button onClick={() => setSelectedDay(day.date)}>תיקון</button>
+                                <button onClick={() => { setSelectedDay(day.date); setFormType("correction"); }}>תיקון</button>
+                            )}
+                            {day.status === "MISSING" && (
+                                <button onClick={() => { setSelectedDay(day.date); setFormType("sick"); }}>אישור מחלה</button>
                             )}
                         </td>
                     </tr>
