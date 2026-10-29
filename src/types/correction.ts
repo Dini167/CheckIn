@@ -24,8 +24,8 @@ export interface TeamCorrection {
         name: string;
     }
     workDate: string;
-    newClockInTime?: string| null;
-    newClockOutTime?: string| null;
-    reason?: string;
+    newClockInTime: string| null;
+    newClockOutTime: string| null;
+    reason: string;
     status: "PENDING" | "APPROVED" | "REJECTED";
 }
