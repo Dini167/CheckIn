@@ -7,11 +7,11 @@ export default function CorrectionRequestItem({request,onReviewed}: {request: Te
         
     return (
         <div>
-            <p>{request.user.name? request.user.name : "-"}</p>
-            <p>{request.workDate? request.workDate : "-"} תאריך עבודה:</p>
-            <p>{request.newClockInTime? request.newClockInTime : "-"} שעת כניסה חדשה:</p>
-            <p>{request.newClockOutTime? request.newClockOutTime : "-"} שעת יציאה חדשה:</p>
-            <p>{request.reason? request.reason : "-"} סיבה:</p>
+            <p> שם:{request.user.name}</p>
+            <p> תאריך עבודה:{request.workDate}</p>
+            <p> שעת כניסה חדשה:{request.newClockInTime? request.newClockInTime : "-"}</p>
+            <p> שעת יציאה חדשה:{request.newClockOutTime? request.newClockOutTime : "-"}</p>
+            <p> סיבה:{request.reason}</p>
             
             <button disabled={isSaving || request.status !== "PENDING"} onClick={() => {
                 setIsSaving(true);
