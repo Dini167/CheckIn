@@ -13,6 +13,7 @@ import CorrectionRequestsPage from '../pages/teamLeader/CorrectionRequestsPage';
 import TeamMembersPage from '../pages/teamLeader/TeamMembersPage';
 import TeamReportPage from '../pages/teamLeader/TeamReportPage';
 import MyAttendancePage from '../pages/employee/MyAttendancePage';
+import SickNotesPage from '../pages/teamLeader/SickNotesPage';
 
 
 export default function AppRoutes() {
@@ -40,6 +41,8 @@ export default function AppRoutes() {
                 <MyAttendancePage /></ProtectedRoute>} />
             <Route path="/team-leader/correction-requests" element={<ProtectedRoute allowedRole={["TEAM_LEADER"]}>
                 <CorrectionRequestsPage /></ProtectedRoute>} />
+            <Route path="/team-leader/sick-notes" element={<ProtectedRoute allowedRole={["TEAM_LEADER"]}>
+                <SickNotesPage /></ProtectedRoute>} />
         </Routes>
     );
 }

@@ -18,10 +18,10 @@ export default function PauseButton({ onSuccess }: PauseButtonProps) {
         }
     };
     return (<>
-        <button type="button" onClick={handlePause} disabled={isLoading}>
+        <button className="btn btn-outline-secondary btn-lg clock-btn" type="button" onClick={handlePause} disabled={isLoading}>
             {isLoading ? 'טוען...' : 'הפסקה'}
         </button>
-        {error && <p style={{ color: 'red' }}>{error}</p>}  
+        {error && <p className="alert alert-danger py-2" style={{ color: 'red' }}>{error}</p>}  
     </>
     );
 }

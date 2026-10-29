@@ -23,11 +23,11 @@ export default function EditSalaryForm({ memberId, currentSalary, onSuccess }: {
 
     return (
         <>
-            <h3>עדכון שכר</h3>
-            <input type="number" value={salary ?? ""} onChange={(e) => setSalary(e.target.value ? parseFloat(e.target.value) : null)} />
-            <button disabled={isSaving} type="button" onClick={handleSubmit}> {isSaving ? "שומר..." : "שמור שכר"}
+            <h3 className="section-title">עדכון שכר</h3>
+            <input className="form-control salary-input" type="number" value={salary ?? ""} onChange={(e) => setSalary(e.target.value ? parseFloat(e.target.value) : null)} />
+            <button className="btn btn-primary btn-sm" disabled={isSaving} type="button" onClick={handleSubmit}> {isSaving ? "שומר..." : "שמור שכר"}
             </button>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {error && <p className="alert alert-danger py-2" style={{ color: 'red' }}>{error}</p>}
 
         </>
     );

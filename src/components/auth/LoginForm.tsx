@@ -35,8 +35,8 @@ export default function LoginForm() {
         <form onSubmit={handleSubmit((data) => submitLogin(data))}>
             <MyInput label='אימייל' type='email' placeholder='יש להזין אימייל' {...register('email', { required: 'יש להזין אימייל', pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'כתובת אימייל לא תקינה' } })} error={errors.email?.message}></MyInput>
             <MyInput label='סיסמה' type='password' placeholder='יש להזין סיסמה' {...register('password', { required: 'יש להזין סיסמה' })} error={errors.password?.message}></MyInput>
-            {errors.root && <span>{errors.root.message}</span>}
-            <button type="submit">התחברות</button>
+            {errors.root && <span className="alert alert-danger d-block py-2">{errors.root.message}</span>}
+            <button className="btn btn-primary w-100" type="submit">התחברות</button>
         </form>
     );
 }

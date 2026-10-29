@@ -19,29 +19,29 @@ export default function MyAttendancePage() {
     const quota = data ?? undefined;
     const monthCorrections = myCorrections?.filter(correction => correction.workDate.startsWith(dayCalendar)) ?? [];
     return (
-        <div>
-            <h1>הנוכחות שלי בחודש {new Date(dayCalendar).toLocaleString("default", { month: "long" })}</h1>
+        <div className="page">
+            <h1 className="page-title">הנוכחות שלי בחודש {new Date(dayCalendar).toLocaleString("default", { month: "long" })}</h1>
             { quota &&
-                (quota?.unlimited ? <p>מכסת התיקונים בלתי מוגבלת</p> : <p>נשארו לך {quota.remaining} תיקונים השבוע</p>)
+                (quota?.unlimited ? <p className="quota-note">מכסת התיקונים בלתי מוגבלת</p> : <p className="quota-note">נשארו לך {quota.remaining} תיקונים השבוע</p>)
             }
-        {isLoading && <p>טוען...</p>}
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        {!resMyCalender && !isLoading && !error && <p>אין נתונים לחודש זה</p>}
-        <button onClick={()=> changeMonth(-1)}>לנתונים של החודש הקודם</button>
-        <button onClick={()=> changeMonth(1)}>לנתונים של החודש הבא</button>
+        {isLoading && <p className="loading">טוען...</p>}
+        {error && <p className="alert alert-danger py-2" style={{ color: 'red' }}>{error}</p>}
+        {!resMyCalender && !isLoading && !error && <p className="empty-state">אין נתונים לחודש זה</p>}
+        <button className="btn btn-outline-primary btn-sm month-nav" onClick={()=> changeMonth(-1)}>לנתונים של החודש הקודם</button>
+        <button className="btn btn-outline-primary btn-sm month-nav" onClick={()=> changeMonth(1)}>לנתונים של החודש הבא</button>
         {resMyCalender && <>
             <MyAttendanceTable days={resMyCalender.days} onCorrected={() => {refetchCalendar(),refetchQuota(),refetchMyCorrections()}} />
-            <p>{formatMinutes(resMyCalender.totalWorkedMinutes)} סך כל שעות העבודה בחודש</p>
-            <p>{resMyCalender.gapCount} ימים עם חסר בדיווח</p>
+            <p className="month-stat">{formatMinutes(resMyCalender.totalWorkedMinutes)} סך כל שעות העבודה בחודש</p>
+            <p className="month-stat">{resMyCalender.gapCount} ימים עם חסר בדיווח</p>
         </>}
-        <h2>הבקשות לתיקון שעות שלי</h2>
-        {myCorrectionsLoading && <p>טוען...</p>}
-        {myCorrectionsError && <p style={{ color: 'red' }}>{myCorrectionsError}</p>}
-        {!myCorrectionsLoading && !myCorrectionsError && myCorrections && monthCorrections.length === 0 && <p>אין בקשות לתיקון שעות</p>}
+        <h2 className="section-title">הבקשות לתיקון שעות שלי</h2>
+        {myCorrectionsLoading && <p className="loading">טוען...</p>}
+        {myCorrectionsError && <p className="alert alert-danger py-2" style={{ color: 'red' }}>{myCorrectionsError}</p>}
+        {!myCorrectionsLoading && !myCorrectionsError && myCorrections && monthCorrections.length === 0 && <p className="empty-state">אין בקשות לתיקון שעות</p>}
         {!myCorrectionsLoading && !myCorrectionsError && myCorrections && monthCorrections.length > 0 && (
-            <ul>
+            <ul className="list-group requests-list">
                 {monthCorrections.map(correction => (
-                    <li key={correction.id}>
+                    <li className="list-group-item" key={correction.id}>
                         {correction.workDate} - {correction.reason} - {correction.status === "PENDING" ? "ממתין" : correction.status === "APPROVED" ? "מאושר" : correction.status === "REJECTED" ? "נדחה" : "הוחל"}
                     </li>
                 ))}

@@ -5,12 +5,12 @@ import { useAuth } from '../../hooks/useAuth';
 export default function MySalaryPage() {
     const { data: salaryData, isLoading, error } = useFetch(getMySalary, "שגיאה בטעינת נתוני השכר", ["mySalary"]);
     const {user} = useAuth();
-    return (<div>
-        <h1>
+    return (<div className="page">
+        <h1 className="page-title">
             נתוני השכר שלי :
         </h1>
-        {isLoading && <p>טוען נתוני שכר...</p>}
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {isLoading && <p className="loading">טוען נתוני שכר...</p>}
+        {error && <p className="alert alert-danger py-2" style={{ color: 'red' }}>{error}</p>}
         {salaryData && !isLoading && !error&& 
             <div>
                 <p>חודש: {salaryData.month}</p>

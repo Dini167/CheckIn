@@ -2,8 +2,8 @@ import type { TeamAttendanceRow } from "../../types/attendance";
 import { formatMinutes } from "../../utils/formatMinutes";
 export default function TeamReportTable({data}: {data:TeamAttendanceRow[]}) {
     return (
-        <div>
-            <table>
+        <div className="table-responsive">
+            <table className="table table-hover align-middle data-table">
                 <thead>
                     <tr>
                         <th>עובד</th>

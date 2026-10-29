@@ -1,160 +1,222 @@
 /* =========================================================
-   CheckIn — עיצוב גלובלי
-   עיצוב בלבד: אין שינוי בקוד React. העיצוב נשען על מבנה
-   התגיות הקיים (h1, table, form, ul...) ועל ‎:has()‎.
+   CheckIn — עיצוב: Bootstrap 5 (RTL) + ערכת צבעים חום־זית וזהב
    ========================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap');
+@import 'bootstrap/dist/css/bootstrap.rtl.min.css';
 
 /* ---------- Design tokens ---------- */
 :root {
-  --navy-900: #0f2547;
-  --navy-800: #16325c;
-  --navy-700: #1d3f72;
-  --navy-600: #27508f;
-  --teal-500: #2ec4b6;
-  --teal-100: #e3f8f6;
-  --pink-500: #e94e77;
+  --olive-950: #22291f;
+  --olive-900: #2c3528;
+  --olive-800: #3a4535;
+  --olive-700: #4a5843;
+  --olive-500: #6f7f63;
+  --olive-100: #e9ede3;
 
-  --bg: #eef2f8;
+  --gold-600: #b7862a;
+  --gold-500: #d4a23c;
+  --gold-400: #e2b85e;
+  --gold-100: #f8edd3;
+
+  --cream: #faf7f0;
+  --cream-deep: #f2ece0;
   --surface: #ffffff;
-  --surface-muted: #f6f8fc;
-  --border: #e2e8f2;
-  --border-strong: #cfd8e6;
+  --border: #e7dfd0;
+  --text: #2f3328;
+  --text-muted: #7b7a6c;
+  --gap-row: #fbe6dc;
 
-  --text: #2b3445;
-  --text-muted: #6b7690;
-  --text-strong: #0f2547;
-
-  --danger: #d64545;
-  --danger-bg: #fdecec;
-  --gap-row: #ffe5e5;
-
-  --radius-sm: 8px;
   --radius: 14px;
   --radius-lg: 20px;
-  --radius-pill: 999px;
+  --shadow-sm: 0 1px 3px rgba(44, 53, 40, 0.08);
+  --shadow: 0 8px 28px rgba(44, 53, 40, 0.10);
+  --shadow-lg: 0 24px 60px rgba(34, 41, 31, 0.28);
+  --sidebar-w: 264px;
 
-  --shadow-sm: 0 1px 2px rgba(15, 37, 71, 0.06);
-  --shadow: 0 6px 24px rgba(15, 37, 71, 0.08);
-  --shadow-lg: 0 18px 50px rgba(15, 37, 71, 0.18);
-
-  --font: 'Heebo', system-ui, 'Segoe UI', Arial, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  color-scheme: light;
+  /* Bootstrap overrides */
+  --bs-body-font-family: 'Heebo', system-ui, 'Segoe UI', Arial, sans-serif;
+  --bs-body-color: var(--text);
+  --bs-body-bg: var(--cream);
+  --bs-primary: var(--olive-800);
+  --bs-primary-rgb: 58, 69, 53;
+  --bs-link-color: var(--gold-600);
+  --bs-link-color-rgb: 183, 134, 42;
+  --bs-link-hover-color: var(--olive-800);
+  --bs-border-color: var(--border);
+  --bs-border-radius: 10px;
+  --bs-focus-ring-color: rgba(212, 162, 60, 0.35);
 }
 
-/* ---------- Base ---------- */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  direction: rtl;
-}
+html { direction: rtl; }
 
 body {
-  margin: 0;
   min-height: 100vh;
-  font-family: var(--font);
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--text);
   background:
-    radial-gradient(1200px 400px at 100% -10%, rgba(46, 196, 182, 0.10), transparent 60%),
-    linear-gradient(180deg, var(--navy-800) 0, var(--navy-800) 220px, var(--bg) 220px);
-  background-repeat: no-repeat;
-  background-color: var(--bg);
+    radial-gradient(900px 380px at 100% 0, rgba(212, 162, 60, 0.10), transparent 60%),
+    var(--cream);
   -webkit-font-smoothing: antialiased;
 }
 
-#root {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 40px 20px 64px;
+/* ---------- Buttons (Bootstrap variables in the theme colors) ---------- */
+.btn { font-weight: 600; border-radius: 10px; }
+
+.btn-primary {
+  --bs-btn-bg: var(--olive-800);
+  --bs-btn-border-color: var(--olive-800);
+  --bs-btn-hover-bg: var(--olive-900);
+  --bs-btn-hover-border-color: var(--olive-900);
+  --bs-btn-active-bg: var(--olive-950);
+  --bs-btn-active-border-color: var(--olive-950);
+  --bs-btn-disabled-bg: var(--olive-500);
+  --bs-btn-disabled-border-color: var(--olive-500);
+  box-shadow: 0 4px 14px rgba(58, 69, 53, 0.25);
 }
 
-/* ---------- Top navigation (NavBar) ---------- */
-#root > nav {
+.btn-outline-primary {
+  --bs-btn-color: var(--olive-800);
+  --bs-btn-border-color: var(--olive-700);
+  --bs-btn-hover-bg: var(--olive-800);
+  --bs-btn-hover-border-color: var(--olive-800);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-active-bg: var(--olive-900);
+  --bs-btn-active-border-color: var(--olive-900);
+}
+
+.btn-success {
+  --bs-btn-bg: #5d7a3c;
+  --bs-btn-border-color: #5d7a3c;
+  --bs-btn-hover-bg: #4c6631;
+  --bs-btn-hover-border-color: #4c6631;
+}
+
+.btn-outline-danger {
+  --bs-btn-color: #b24a35;
+  --bs-btn-border-color: #d9a092;
+  --bs-btn-hover-bg: #b24a35;
+  --bs-btn-hover-border-color: #b24a35;
+}
+
+/* ---------- Forms ---------- */
+.form-label { font-weight: 600; color: var(--olive-800); font-size: 0.9rem; }
+
+.form-control,
+.form-select {
+  border-color: var(--border);
+  background-color: #fffdf8;
+  padding: 0.6rem 0.85rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--gold-500);
+  box-shadow: 0 0 0 0.2rem rgba(212, 162, 60, 0.25);
+}
+
+.alert { border-radius: 10px; border: none; }
+.alert-success { background: #e8efdc; color: #3f5a24; }
+.alert-warning { background: var(--gold-100); color: #7a5a14; }
+.alert-danger { background: #f9e3dc; color: #9b3a26; }
+
+/* ---------- Layout: sidebar on the right (like a professional attendance system) ---------- */
+.app-sidebar {
+  position: fixed;
+  inset: 0 0 0 auto;
+  z-index: 50;
+  width: var(--sidebar-w);
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-direction: column;
   gap: 4px;
-  padding: 10px 14px;
-  margin-bottom: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(8px);
+  padding: 24px 16px 20px;
+  background: linear-gradient(180deg, var(--olive-800) 0%, var(--olive-950) 100%);
+  box-shadow: -8px 0 30px rgba(34, 41, 31, 0.18);
+  overflow-y: auto;
 }
 
-#root > nav::before {
+.app-sidebar::before {
   content: 'CheckIn';
-  display: inline-flex;
-  align-items: center;
-  min-height: 34px;
-  padding-right: 44px;
-  background: url('/logo.svg') right center / 34px 34px no-repeat;
-  margin-left: 14px;
-  padding-left: 18px;
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  display: block;
+  margin: 0 8px 22px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   color: #fff;
-  font-size: 1.15rem;
+  font-size: 1.6rem;
   font-weight: 800;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
+  background: linear-gradient(90deg, var(--gold-400), #f6e2b0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-#root > nav a {
-  padding: 8px 14px;
-  border-radius: var(--radius-pill);
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 0.95rem;
+.sidebar-link {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.78);
   font-weight: 500;
-  transition: background 0.15s, color 0.15s;
+  text-decoration: none;
+  border-right: 3px solid transparent;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 
-#root > nav a:hover {
-  background: rgba(255, 255, 255, 0.12);
+.sidebar-link:hover {
+  background: rgba(255, 255, 255, 0.08);
   color: #fff;
 }
 
-#root > nav a.active {
-  background: #fff;
-  color: var(--navy-800);
+.sidebar-link.active {
+  background: rgba(212, 162, 60, 0.16);
+  color: var(--gold-400);
+  border-right-color: var(--gold-500);
   font-weight: 700;
 }
 
-/* שם המשתמש + התנתקות — נדחפים לקצה השמאלי */
-#root > nav p {
-  margin: 0 auto 0 4px;
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 0.9rem;
-}
-
-#root > nav button {
-  margin: 0;
-  padding: 7px 16px;
+/* "דף הבית" (/team-leader, /employee) is a prefix of the other paths, so NavLink marks it active too.
+   When another link is active, the home link (first child) goes back to the normal look. */
+.app-sidebar:has(> .sidebar-link.active ~ .sidebar-link.active) > .sidebar-link:first-child {
   background: transparent;
-  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.78);
+  border-right-color: transparent;
+  font-weight: 500;
+}
+
+.sidebar-user {
+  margin: auto 8px 10px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   color: #fff;
-  box-shadow: none;
+  font-weight: 600;
 }
 
-#root > nav button:hover:not(:disabled) {
-  background: var(--pink-500);
-  border-color: var(--pink-500);
-  box-shadow: none;
+.sidebar-user::before {
+  content: 'מחובר/ת כ־';
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.55);
 }
 
-/* ---------- Page = card ---------- */
-#root > div {
-  background: var(--surface);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow);
-  padding: 32px 36px 36px;
+.sidebar-logout {
+  margin: 0 8px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #fff;
+  background: transparent;
+}
+
+.sidebar-logout:hover {
+  background: var(--gold-500);
+  border-color: var(--gold-500);
+  color: var(--olive-950);
+}
+
+/* the page sits next to the sidebar only when it exists (logged in) */
+#root:has(> .app-sidebar) > .page { margin-right: var(--sidebar-w); }
+
+/* ---------- Page ---------- */
+.page {
+  padding: 36px 40px 56px;
+  max-width: calc(1180px + var(--sidebar-w));
   animation: page-in 0.35s ease-out;
 }
 
@@ -163,520 +225,193 @@ body {
   to { opacity: 1; transform: none; }
 }
 
-/* ---------- Typography ---------- */
-h1,
-h2,
-h3 {
-  color: var(--text-strong);
-  line-height: 1.25;
-  margin: 0 0 16px;
-}
-
-h1 {
-  font-size: 1.9rem;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  padding-bottom: 16px;
-  margin-bottom: 24px;
-  border-bottom: 1px solid var(--border);
+.page-title {
   position: relative;
+  margin-bottom: 26px;
+  padding-bottom: 12px;
+  color: var(--olive-900);
+  font-size: 1.85rem;
+  font-weight: 800;
 }
 
-h1::after {
+.page-title::after {
   content: '';
   position: absolute;
   right: 0;
-  bottom: -1px;
-  width: 64px;
-  height: 3px;
-  border-radius: 3px;
-  background: var(--teal-500);
+  bottom: 0;
+  width: 56px;
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--gold-400), var(--gold-600));
 }
 
-h2 {
-  font-size: 1.35rem;
+.section-title {
+  margin: 28px 0 14px;
+  color: var(--olive-800);
+  font-size: 1.2rem;
   font-weight: 700;
 }
 
-h3 {
-  font-size: 1.1rem;
-  font-weight: 600;
-}
+.greeting { color: var(--olive-700); font-size: 1.25rem; font-weight: 500; margin-bottom: 18px; }
 
-p {
-  margin: 0 0 12px;
-}
-
-/* כותרות פנימיות (h1 בתוך קומפוננטה, למשל "זמני העבודה של היום") — קטנות יותר */
-#root > div div h1 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  padding: 0;
-  margin: 18px 0 10px;
-  border: none;
-}
-
-#root > div div h1::after {
-  display: none;
-}
-
-/* ---------- Links ---------- */
-a {
-  color: var(--navy-600);
-  font-weight: 600;
-  text-decoration: none;
-  transition: color 0.15s;
-}
-
-a:hover {
-  color: var(--teal-500);
-}
-
-/* קישורי ניווט שעומדים ישירות בדף — כפתורי "pill" */
-#root > div > a {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin: 8px 0 8px 10px;
-  padding: 9px 20px;
-  border: 1.5px solid var(--border-strong);
-  border-radius: var(--radius-pill);
-  background: var(--surface);
-  color: var(--navy-700);
-  font-size: 0.95rem;
-  box-shadow: var(--shadow-sm);
-  transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.15s;
-}
-
-#root > div > a:hover {
-  background: var(--navy-700);
-  border-color: var(--navy-700);
-  color: #fff;
-  transform: translateY(-1px);
-}
-
-/* ---------- Buttons ---------- */
-button {
-  font-family: inherit;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 10px 22px;
-  margin: 6px 0 6px 8px;
-  border: none;
-  border-radius: var(--radius-pill);
-  background: var(--navy-700);
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(29, 63, 114, 0.22);
-  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
-}
-
-button:hover:not(:disabled) {
-  background: var(--navy-900);
-  transform: translateY(-1px);
-  box-shadow: 0 8px 18px rgba(29, 63, 114, 0.28);
-}
-
-button:active:not(:disabled) {
-  transform: none;
-}
-
-button:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-  outline: 3px solid rgba(46, 196, 182, 0.45);
-  outline-offset: 2px;
-}
-
-/* כפתור ההתנתקות — הכפתור האחרון בדף: סגנון משני */
-#root > div > button:last-child {
-  background: transparent;
-  color: var(--pink-500);
-  border: 1.5px solid currentColor;
-  box-shadow: none;
-}
-
-#root > div > button:last-child:hover {
-  background: var(--pink-500);
-  color: #fff;
-}
-
-/* ---------- Form fields ---------- */
-label {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  margin-bottom: 6px;
-}
-
-input,
-select,
-textarea {
-  font-family: inherit;
-  font-size: 1rem;
-  color: var(--text);
-  width: 100%;
-  padding: 11px 14px;
-  border: 1.5px solid var(--border-strong);
-  border-radius: var(--radius-sm);
-  background: var(--surface);
-  transition: border-color 0.15s, box-shadow 0.15s;
-}
-
-input:hover,
-select:hover,
-textarea:hover {
-  border-color: var(--navy-600);
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-  outline: none;
-  border-color: var(--teal-500);
-  box-shadow: 0 0 0 4px rgba(46, 196, 182, 0.15);
-}
-
-textarea {
-  min-height: 84px;
-  resize: vertical;
-}
-
-select {
-  cursor: pointer;
-}
-
-/* MyInput: div > label + input + span */
-div:has(> label + input) {
-  margin-bottom: 18px;
-}
-
-div:has(> label + input) > span {
-  display: block;
-  margin-top: 6px;
-  font-size: 0.85rem;
-  color: var(--danger);
-}
-
-form > select,
-form > span {
-  margin-bottom: 18px;
-}
-
-form > span {
-  display: block;
-  color: var(--danger);
-  font-size: 0.9rem;
-}
-
-form > button[type='submit'] {
-  width: 100%;
-  margin: 8px 0 0;
-  padding: 13px;
-  font-size: 1.05rem;
-}
-
-/* ---------- Error messages (inline style color: red) ---------- */
-p[style*='red'] {
-  color: var(--danger) !important;
-  background: var(--danger-bg);
-  border-right: 4px solid var(--danger);
-  border-radius: var(--radius-sm);
-  padding: 10px 14px;
-  font-weight: 500;
-}
-
-/* ---------- Tables ---------- */
-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin: 16px 0 20px;
-  font-size: 0.95rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-
-thead th {
-  background: var(--surface-muted);
-  color: var(--navy-700);
-  font-weight: 700;
-  font-size: 0.85rem;
-  text-align: right;
-  padding: 13px 16px;
-  border-bottom: 1px solid var(--border);
-  white-space: nowrap;
-}
-
-tbody td {
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
-  vertical-align: middle;
-}
-
-tbody tr:last-child td {
-  border-bottom: none;
-}
-
-tbody tr {
-  transition: background 0.12s;
-}
-
-tbody tr:hover {
-  background: #f3f7fd;
-}
-
-/* ---------- My attendance: status column as a badge ----------
-   הטבלה של "הנוכחות שלי" היא ה-table היחיד שעומד ישירות בדף.
-   CSS לא יכול לבחור תא לפי הטקסט שבו, ולכן:
-   - כל סטטוס = תגית אפורה-כחלחלה ("סוף שבוע", "עבד"...)
-   - שורה עם חור בדיווח (מקבלת background מ-React) = תגית אדומה */
-#root > div > table td:nth-child(6) {
-  white-space: nowrap;
-}
-
-#root > div > table tbody td:nth-child(6) {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--navy-700);
-}
-
-#root > div > table tbody tr td:nth-child(6)::before {
-  content: '';
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  margin-left: 8px;
-  border-radius: 50%;
-  background: var(--teal-500);
-  vertical-align: middle;
-}
-
-#root > div > table tbody tr[style*='background'] td:nth-child(6) {
-  color: var(--danger);
-}
-
-#root > div > table tbody tr[style*='background'] td:nth-child(6)::before {
-  background: var(--danger);
-  box-shadow: 0 0 0 3px rgba(214, 69, 69, 0.18);
-}
-
-/* עמודת "תיקון" — כפתור קטן */
-#root > div > table td:nth-child(7) button {
-  margin: 0;
-  padding: 6px 14px;
-  font-size: 0.8rem;
-  background: var(--danger);
-  box-shadow: none;
-}
-
-/* ---------- Lists (team members, team board, sessions) ---------- */
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 12px 0 20px;
-  display: grid;
-  gap: 10px;
-}
-
-li {
+/* ---------- States: loading, empty ---------- */
+.loading {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 14px;
-  padding: 14px 18px;
-  background: var(--surface-muted);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  transition: border-color 0.15s, box-shadow 0.15s;
-}
-
-li:hover {
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow-sm);
-}
-
-li button {
-  margin: 0;
-  padding: 7px 16px;
-  font-size: 0.85rem;
-}
-
-li input {
-  width: 140px;
-}
-
-/* ---------- Team members: join code chip (הפסקה שמיד אחרי הכותרת) ---------- */
-#root > div:has(ul li button) > h1 + p {
-  display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 8px 18px;
-  border: 1.5px dashed var(--teal-500);
-  border-radius: var(--radius-pill);
-  background: var(--teal-100);
-  color: #0f6e66;
-  font-family: var(--mono);
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-}
-
-#root > div:has(ul li button) > h1 + p::before {
-  content: 'קוד הצטרפות לצוות:';
-  font-family: var(--font);
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0;
   color: var(--text-muted);
 }
 
-/* ---------- Home: live clock (div שכל תוכנו טקסט + <p>) ---------- */
-#root > div > div:has(> p:only-child) {
-  display: inline-block;
-  margin: 4px 0 24px;
-  padding: 18px 28px;
+.loading::before {
+  content: '';
+  width: 18px;
+  height: 18px;
+  border: 3px solid var(--gold-100);
+  border-top-color: var(--gold-500);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.empty-state {
+  padding: 28px;
+  border: 2px dashed var(--border);
   border-radius: var(--radius);
-  background: linear-gradient(135deg, var(--navy-700), var(--navy-900));
-  color: var(--teal-500);
-  font-size: 2.2rem;
-  font-weight: 800;
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ---------- Home: live clock + today panel ---------- */
+.live-clock {
+  display: inline-block;
+  min-width: 260px;
+  margin-bottom: 22px;
+  padding: 18px 28px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--olive-800), var(--olive-950));
+  box-shadow: var(--shadow);
+  color: var(--gold-400);
+  font-size: 2.4rem;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.live-clock-date {
+  margin: 2px 0 0;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.today-panel {
+  padding: 26px 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
   box-shadow: var(--shadow);
 }
 
-#root > div > div:has(> p:only-child) > p {
-  margin: 2px 0 0;
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.8);
-  letter-spacing: 0;
-}
-
-/* ---------- Home: today's attendance panel ---------- */
-#root > div > div:has(> span) {
-  padding: 22px 24px;
-  margin-bottom: 24px;
-  background: var(--surface-muted);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-}
-
-#root > div > div:has(> span) > span:first-child {
+.status-badge {
   display: inline-block;
-  margin-bottom: 14px;
-  padding: 5px 14px;
-  border-radius: var(--radius-pill);
-  background: var(--teal-100);
-  color: #128177;
+  margin-bottom: 18px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: var(--gold-100);
+  color: #7a5a14;
   font-weight: 700;
-  font-size: 0.9rem;
 }
 
-/* ---------- Team report: filters toolbar ---------- */
-#root > div > div:has(> select) {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 12px 16px;
-  padding: 18px 20px;
-  margin-bottom: 8px;
-  background: var(--surface-muted);
-  border: 1px solid var(--border);
+.status-badge:empty { display: none; }
+
+.clock-btn { min-width: 170px; margin: 0 0 12px 10px; padding: 0.75rem 1.5rem; }
+
+.sessions-list { max-width: 420px; }
+.sessions-list .list-group-item { font-variant-numeric: tabular-nums; }
+
+.summary-card {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 14px 22px;
   border-radius: var(--radius);
+  background: var(--olive-100);
 }
 
-#root > div > div:has(> select) > div {
-  flex: 1 1 180px;
-  margin: 0;
-}
+.summary-card .section-title { margin: 0 0 4px; font-size: 1rem; }
+.summary-card p { margin: 0; font-size: 1.3rem; font-weight: 700; color: var(--olive-900); }
 
-#root > div > div:has(> select) > select {
-  flex: 0 1 180px;
-  width: auto;
-}
-
-/* ---------- Auth pages (login / register): centered card on navy ---------- */
-body:has(#root > div > form) {
-  background:
-    radial-gradient(900px 500px at 85% 10%, rgba(46, 196, 182, 0.22), transparent 60%),
-    radial-gradient(700px 400px at 10% 90%, rgba(233, 78, 119, 0.14), transparent 60%),
-    linear-gradient(160deg, var(--navy-700), var(--navy-900));
-}
-
-#root:has(> div > form) {
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding-top: 24px;
-}
-
-#root > div:has(> form) {
-  width: 100%;
-  max-width: 440px;
-  padding: 40px 36px 28px;
-  box-shadow: var(--shadow-lg);
-}
-
-#root > div:has(> form) > h1 {
-  text-align: center;
-  font-size: 1.7rem;
-}
-
-#root > div:has(> form) > h1::before {
-  content: '';
-  display: block;
-  width: 56px;
-  height: 56px;
-  margin: 0 auto 12px;
-  background: url('/logo.svg') center / contain no-repeat;
-}
-
-#root > div:has(> form) > h1::after {
-  right: 50%;
-  transform: translateX(50%);
-}
-
-#root > div:has(> form) > p:last-child {
-  margin: 20px 0 0;
-  text-align: center;
-  font-size: 0.95rem;
-  color: var(--text-muted);
-}
-
-/* ---------- My attendance: correction form as a popup ----------
-   טופס התיקון (div) וכפתור "סגור" יושבים ממש לפני הטבלה,
-   ולכן מזהים אותם לפי הסדר: div + button + table.
-   הצל הענק של החלון משמש כרקע כהה על כל המסך. */
-body:has(#root > div > div + button + table) {
+/* ---------- Tables ---------- */
+.data-table {
   overflow: hidden;
+  margin: 16px 0 22px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  --bs-table-hover-bg: #fbf6ea;
 }
 
-#root > div > div:has(+ button + table) {
-  --modal-w: min(460px, calc(100vw - 32px));
+.data-table thead th {
+  padding: 13px 14px;
+  border-bottom: 2px solid var(--gold-400);
+  background: var(--cream-deep);
+  color: var(--olive-800);
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.data-table td { padding: 11px 14px; font-variant-numeric: tabular-nums; }
+
+/* rows with a gap get an inline background from React — keep it warm */
+.data-table tr[style*='background'] > td { background: var(--gap-row) !important; }
+
+.row-action { margin: 2px 0 2px 6px; }
+
+.month-nav { margin: 0 0 8px 8px; }
+
+.quota-note {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--gold-100);
+  color: #7a5a14;
+  font-weight: 600;
+}
+
+.month-stat {
+  display: inline-block;
+  margin: 0 0 12px 12px;
+  padding: 10px 18px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  font-weight: 600;
+}
+
+.requests-list { max-width: 720px; }
+
+/* ---------- Correction / sick note form as a centered popup ----------
+   הטופס (div) וכפתור "סגור" יושבים ממש לפני הטבלה */
+body:has(.page > div + .modal-close + table) { overflow: hidden; }
+
+.page > div:has(+ .modal-close + table) {
+  --modal-w: min(480px, calc(100vw - 32px));
   position: fixed;
-  top: 12vh;
+  top: 10vh;
   left: 50%;
   z-index: 100;
   width: var(--modal-w);
-  max-height: 76vh;
+  max-height: 80vh;
   overflow-y: auto;
   padding: 26px 28px 28px;
-  background: var(--surface);
+  border-top: 5px solid var(--gold-500);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg), 0 0 0 100vmax rgba(15, 37, 71, 0.45);
+  background: var(--surface);
+  box-shadow: var(--shadow-lg), 0 0 0 100vmax rgba(34, 41, 31, 0.55);
   transform: translateX(-50%);
   animation: modal-in 0.2s ease-out;
 }
@@ -686,97 +421,161 @@ body:has(#root > div > div + button + table) {
   to { opacity: 1; transform: translateX(-50%); }
 }
 
-#root > div > div:has(+ button + table) > h2 {
-  margin-top: 0;
-  padding-left: 72px;
-}
+.page > div:has(+ .modal-close + table) .section-title { margin-top: 0; padding-left: 70px; }
 
-#root > div > div:has(+ button + table) > p {
-  margin: 8px 0 0;
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
-  background: var(--teal-100);
-  color: var(--navy-800);
-  font-weight: 600;
-}
-
-/* כפתור "סגור" — בפינה השמאלית העליונה של החלון */
-#root > div > div:has(+ button + table) + button {
+.modal-close {
   position: fixed;
-  top: calc(12vh + 22px);
-  left: calc(50% - min(230px, calc(50vw - 16px)) + 18px);
+  top: calc(10vh + 24px);
+  left: calc(50% - min(240px, calc(50vw - 16px)) + 20px);
   z-index: 101;
-  margin: 0;
-  padding: 6px 14px;
-  font-size: 0.85rem;
-  background: var(--surface-muted);
-  color: var(--navy-700);
-  border: 1px solid var(--border-strong);
-  box-shadow: none;
-  animation: modal-in-btn 0.2s ease-out;
 }
 
-@keyframes modal-in-btn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* ---------- Team leader: request cards ---------- */
+.request-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 22px;
+  margin-bottom: 14px;
+  padding: 18px 22px;
+  border: 1px solid var(--border);
+  border-right: 5px solid var(--gold-500);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
 }
 
-#root > div > div:has(+ button + table) + button:hover {
-  background: var(--border);
+.request-card p { margin: 0; }
+.request-card p:first-child { flex-basis: 100%; color: var(--olive-900); font-size: 1.05rem; font-weight: 700; }
+.request-card .btn { margin-left: 6px; }
+.request-card .alert { flex-basis: 100%; }
+
+/* ---------- Team leader: who's on shift ---------- */
+.team-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
+  padding: 0;
+  list-style: none;
 }
+
+.team-member-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  color: var(--text-muted);
+}
+
+.team-member-card .status-badge { align-self: flex-start; margin: 2px 0; }
+.member-name { color: var(--olive-900); font-size: 1.1rem; font-weight: 700; }
+
+/* ---------- Team leader: members ---------- */
+.join-code {
+  display: inline-block;
+  padding: 8px 18px;
+  border: 2px dashed var(--gold-500);
+  border-radius: 10px;
+  background: var(--gold-100);
+  color: var(--olive-900);
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.join-code::before {
+  content: 'קוד הצטרפות לצוות: ';
+  font-family: 'Heebo', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.members-list { max-width: 820px; margin-top: 18px; box-shadow: var(--shadow-sm); }
+.member-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 14px 18px; }
+.member-row > .btn { margin-right: auto; }
+.next-salary { flex-basis: 100%; color: var(--gold-600); font-size: 0.9rem; font-weight: 600; }
+.salary-input { max-width: 160px; display: inline-block; margin-left: 8px; }
+
+/* ---------- Team report: filters toolbar ---------- */
+.filters-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  align-items: end;
+  gap: 12px 14px;
+  margin-bottom: 18px;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.filters-bar .mb-3 { margin-bottom: 0 !important; }
+
+/* ---------- Auth pages (no sidebar) ---------- */
+.auth-card {
+  width: min(440px, calc(100vw - 32px));
+  margin: 8vh auto;
+  padding: 36px 36px 30px;
+  border-top: 6px solid var(--gold-500);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
+  animation: page-in 0.35s ease-out;
+}
+
+.auth-title {
+  margin-bottom: 24px;
+  color: var(--olive-900);
+  font-weight: 800;
+  text-align: center;
+}
+
+.auth-title::before {
+  content: 'CheckIn';
+  display: block;
+  margin-bottom: 4px;
+  color: var(--gold-600);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.auth-switch { margin: 18px 0 0; color: var(--text-muted); text-align: center; }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 720px) {
-  #root {
-    padding: 16px 12px 40px;
+@media (max-width: 991px) {
+  .app-sidebar {
+    position: static;
+    width: auto;
+    height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 12px 14px;
   }
 
-  #root > div {
-    padding: 22px 18px 26px;
-    border-radius: var(--radius);
-  }
+  .app-sidebar::before { margin: 0 4px 0 14px; padding: 0; border: none; font-size: 1.3rem; }
+  .sidebar-link { padding: 7px 12px; border-right: none; }
+  .sidebar-user { margin: 0 auto 0 8px; padding: 0; border: none; }
+  .sidebar-user::before { display: none; }
+  .sidebar-logout { margin: 0; }
 
-  h1 {
-    font-size: 1.5rem;
-  }
-
-  table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-
-  #root > div > a {
-    margin-left: 6px;
-    padding: 8px 14px;
-  }
-
-  #root > nav::before {
-    width: 100%;
-    margin: 0 0 6px;
-    padding: 0;
-    border: none;
-  }
-
-  #root > nav p {
-    display: none;
-  }
+  #root:has(> .app-sidebar) > .page { margin-right: 0; }
+  .page { padding: 24px 16px 40px; }
+  .live-clock { font-size: 1.9rem; min-width: 0; width: 100%; }
+  .clock-btn { width: 100%; margin-left: 0; }
+  .data-table { display: block; overflow-x: auto; white-space: nowrap; }
 }
 
-/* ---------- Print (דוחות) ---------- */
+/* ---------- Print (reports) ---------- */
 @media print {
-  body {
-    background: #fff;
-  }
-
-  #root > div {
-    box-shadow: none;
-    padding: 0;
-  }
-
-  #root > nav,
-  #root > div > a,
-  button {
-    display: none;
-  }
+  .app-sidebar, .btn, .filters-bar { display: none !important; }
+  #root:has(> .app-sidebar) > .page { margin-right: 0; }
+  body { background: #fff; }
 }

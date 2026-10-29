@@ -3,10 +3,10 @@ import { Link } from 'react-router';
 
 export default function RegisterPage() {
     return (
-        <div>
-            <h1>הרשמה</h1>
+        <div className="auth-card">
+            <h1 className="auth-title">הרשמה</h1>
             <RegisterForm />
-            <p>כבר יש לך חשבון? <Link to="/login">להתחברות</Link></p>
+            <p className="auth-switch">כבר יש לך חשבון? <Link to="/login">להתחברות</Link></p>
         </div>
     );
 }

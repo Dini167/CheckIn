@@ -5,8 +5,8 @@ import AttendanceStatus from "./AttendanceStatus";
 
 export default function TeamAttendanceItem({ member }: { member: TeamAttendanceMember }) {
     return (
-        <li >
-            <span>{member.user.name}</span>
+        <li className="team-member-card">
+            <span className="member-name">{member.user.name}</span>
             <AttendanceStatus state={member.state} />
             <span>{member.location=="HOME" ? "מהבית" : member.location=="OFFICE" ? "מהמשרד":"-"}</span>
             <span>{formatMinutes(member.workedMinutesToday)}</span>

@@ -40,27 +40,27 @@ export default function CorrectionForm({ day, onSuccess }: { day: CalendarDay, o
     }
     return (
         <div>
-            <h2>טופס תיקון</h2>
+            <h2 className="section-title">טופס תיקון</h2>
             {!res && <form onSubmit={handleSubmit(submitCorrection)}>
                 <MyInput label="סיבה" type="text" {...register("reason", { required: true })} />
                 {day.status == "MISSING" && (<>
                     <MyInput label="כניסה חדשה" type="time" {...register("newClockIn")} />
-                    <label>
+                    <label className="form-label w-100">
                         מיקום:
-                        <select {...register("location")}>
+                        <select className="form-select mt-1 mb-3" {...register("location")}>
                             <option value="OFFICE">משרד</option>
                             <option value="HOME">בית</option>
                         </select>
                     </label></>)}
                 <MyInput label="יציאה חדשה" type="time" {...register("newClockOut", { required: true })} />
 
-                <button type="submit" disabled={res ? true : false}>שלח תיקון</button>
-                {errors.root && <span>{errors.root.message}</span>}
+                <button className="btn btn-primary w-100" type="submit" disabled={res ? true : false}>שלח תיקון</button>
+                {errors.root && <span className="alert alert-danger d-block py-2 mt-2">{errors.root.message}</span>}
             </form>}
             {
                 res && (res.status === "APPLIED" ? (
-                    <p>התיקון נשמר</p>
-                ) : <p>המכסה השבועית נגמרה, והבקשה נשלחה לאישור ראש הצוות</p>)
+                    <p className="alert alert-success">התיקון נשמר</p>
+                ) : <p className="alert alert-warning">המכסה השבועית נגמרה, והבקשה נשלחה לאישור ראש הצוות</p>)
             }
         </div>
     )

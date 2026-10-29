@@ -8,14 +8,14 @@ export default function TeamMembersPage() {
     const teamMembers = data ?? [];
     const { user } = useAuth();
     return (
-        <div>
-            <h1>עובדי הצוות</h1>
-            {isLoading && <p>טוען עובדים...</p>}
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+        <div className="page">
+            <h1 className="page-title">עובדי הצוות</h1>
+            {isLoading && <p className="loading">טוען עובדים...</p>}
+            {error && <p className="alert alert-danger py-2" style={{ color: 'red' }}>{error}</p>}
             {!isLoading && !error && teamMembers.length === 0 && (
-                <p>לא נמצאו עובדים בצוות זה</p>
+                <p className="empty-state">לא נמצאו עובדים בצוות זה</p>
             )}
-            <p>{user?.team.joinCode}</p>
+            <p className="join-code">{user?.team.joinCode}</p>
 
             {!isLoading && !error && teamMembers.length > 0 && (
                 <TeamMembersList members={teamMembers} onSalaryUpdated={refetch} />

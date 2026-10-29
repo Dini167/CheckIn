@@ -14,15 +14,15 @@ export default function TeamAttendancePage() {
         return () => clearInterval(interval);
     }, [teamAttendance.refetch]);
     return (
-        <div>
-            <h1>נוכחות הצוות</h1>
-            {teamAttendance.isLoading && <p>טוען נתוני נוכחות הצוות...</p>}
-            {teamAttendance.error && <p style={{ color: 'red' }}>{teamAttendance.error}</p>}
+        <div className="page">
+            <h1 className="page-title">נוכחות הצוות</h1>
+            {teamAttendance.isLoading && <p className="loading">טוען נתוני נוכחות הצוות...</p>}
+            {teamAttendance.error && <p className="alert alert-danger py-2" style={{ color: 'red' }}>{teamAttendance.error}</p>}
             {teamAttendance.data && teamAttendance.data.length > 0&& !teamAttendance.isLoading&&!teamAttendance.error &&
             <TeamAttendanceList members={teamAttendance.data} />
             }
             {!teamAttendance.isLoading && !teamAttendance.error && (!teamAttendance.data || teamAttendance.data.length === 0) && (
-                <p>אין עובדים בצוות</p>
+                <p className="empty-state">אין עובדים בצוות</p>
             )}
         </div>
     );

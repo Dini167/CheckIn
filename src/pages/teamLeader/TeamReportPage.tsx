@@ -11,12 +11,12 @@ export default function TeamReportPage() {
     const { data, isLoading, error } = useFetch(() => getTeamAttendance(filter), "שגיאה בטעינת דוח צוות", ["teamAttendance", filter]);
     const rows = data ?? [];
     return (
-        <div>
-            <h1>דוח נוכחות צוותית</h1>
+        <div className="page">
+            <h1 className="page-title">דוח נוכחות צוותית</h1>
             <TeamReportFilters filter={filter} setFilter={setFilter} />
-            {isLoading && <p>טוען דוח נוכחות...</p>}
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            {!isLoading && !error && rows.length === 0 && <p>לא נמצאו דיווחי נוכחות</p>}
+            {isLoading && <p className="loading">טוען דוח נוכחות...</p>}
+            {error && <p className="alert alert-danger py-2" style={{ color: 'red' }}>{error}</p>}
+            {!isLoading && !error && rows.length === 0 && <p className="empty-state">לא נמצאו דיווחי נוכחות</p>}
             {!isLoading && !error && rows.length > 0 && <TeamReportTable data={rows} />}
         </div>
     );

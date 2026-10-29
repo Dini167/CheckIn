@@ -22,14 +22,14 @@ export default function ClockOutForm({ onSuccess }: ClockOutFormProps) {
     };
     return (
         <>
-            <label>
+            <label className="form-label w-100">
                 סיכום יום העבודה:
-                <textarea value={dailySummary} onChange={(e) => setDailySummary(e.target.value)} placeholder="סיכום יום העבודה" />
+                <textarea className="form-control mt-1" value={dailySummary} onChange={(e) => setDailySummary(e.target.value)} placeholder="סיכום יום העבודה" />
             </label>
-            <button type="button" onClick={handleClockOut} disabled={isLoading}>
+            <button className="btn btn-primary btn-lg clock-btn" type="button" onClick={handleClockOut} disabled={isLoading}>
                 {isLoading ? 'טוען...' : "סיום יום עבודה"}
             </button>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {error && <p className="alert alert-danger py-2" style={{ color: 'red' }}>{error}</p>}
         </>
     );
 }

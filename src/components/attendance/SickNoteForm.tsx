@@ -31,14 +31,14 @@ export default function SickNoteForm({ day, onSuccess }: { day: CalendarDay, onS
 
     return (
         <div>
-            {sent ? <p>האישור נשלח לראש הצוות</p> : ""}
+            {sent ? <p className="alert alert-success">האישור נשלח לראש הצוות</p> : ""}
             {!sent && (
             <form onSubmit={handleSubmit(onSubmit)}>
             <MyInput label="סיבת ההיעדרות" {...register("note", { required: "יש לכתוב סיבה" })} />
-            <input type="file" accept=".pdf,.png,.jpg,.jpeg" {...register("file", { required: "יש לצרף קובץ" })} />
-            <button type="submit">שליחת אישור מחלה</button>
-            {errors.file && <p>{errors.file.message}</p>}
-            {errors.note && <p>{errors.note.message}</p>}
+            <input className="form-control mb-3" type="file" accept=".pdf,.png,.jpg,.jpeg" {...register("file", { required: "יש לצרף קובץ" })} />
+            <button className="btn btn-primary w-100" type="submit">שליחת אישור מחלה</button>
+            {errors.file && <p className="invalid-feedback d-block">{errors.file.message}</p>}
+            {errors.note && <p className="invalid-feedback d-block">{errors.note.message}</p>}
             </form>
             )}
 

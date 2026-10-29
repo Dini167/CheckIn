@@ -22,7 +22,7 @@ export default function MyAttendance() {
         setTodayAttendance(attendance);
     };
     return (
-        <div>
+        <div className="today-panel">
             {todayAttendance && <AttendanceStatus state={todayAttendance.state} />}
             {todayAttendance && (todayAttendance.state === "NOT_STARTED" || todayAttendance.state === "PAUSED"|| todayAttendance.state === "ENDED") && <ClockInForm  onSuccess={refreshAttendance} />}
             {todayAttendance && (todayAttendance.state === "IN"|| todayAttendance.state === "PAUSED") && <ClockOutForm onSuccess={refreshAttendance} />}

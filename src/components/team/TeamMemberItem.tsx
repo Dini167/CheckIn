@@ -11,15 +11,15 @@ export default function TeamMemberItem({ member, onSalaryUpdated }: { member: Te
     };
     return (
 
-        <li>{member.name} ({member.email})  {member.salaryMissing ? "טרם הוגדר שכר" : member.salary + "₪ לשעה"}
+        <li className="list-group-item member-row">{member.name} ({member.email})  {member.salaryMissing ? "טרם הוגדר שכר" : member.salary + "₪ לשעה"}
             {isEditing && (
                 <EditSalaryForm memberId={member.id} currentSalary={member.salary} onSuccess={handleSalaryUpdated} />
             )}
-            <button type="button" onClick={() => setIsEditing(!isEditing)}>
+            <button className="btn btn-sm btn-outline-primary" type="button" onClick={() => setIsEditing(!isEditing)}>
                 {isEditing ? "ביטול" : "ערוך שכר"}
             </button>
             {member.nextSalary && member.nextSalaryFrom && (
-                <div>שכר עתידי: {member.nextSalary}₪ החל מ-{formatMonth(member.nextSalaryFrom)}</div>
+                <div className="next-salary">שכר עתידי: {member.nextSalary}₪ החל מ-{formatMonth(member.nextSalaryFrom)}</div>
             )}
         </li>
 

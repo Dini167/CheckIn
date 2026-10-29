@@ -27,11 +27,11 @@ export default function ClockInForm({ onSuccess }: ClockInFormProps) {
         onChange={(e) => setRemark(e.target.value)}
         placeholder="הערה לדיווח חריג (לא חובה)"
     />
-            <button disabled={isLoading} onClick={() => handleClockIn("OFFICE")}>כניסה מהמשרד
+            <button className="btn btn-primary btn-lg clock-btn" disabled={isLoading} onClick={() => handleClockIn("OFFICE")}>כניסה מהמשרד
 </button>
-            <button disabled={isLoading} onClick={() => handleClockIn("HOME")}>כניסה מהבית
+            <button className="btn btn-outline-primary btn-lg clock-btn" disabled={isLoading} onClick={() => handleClockIn("HOME")}>כניסה מהבית
 </button>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {error && <p className="alert alert-danger py-2" style={{ color: 'red' }}>{error}</p>}
    </> );
 }
 export interface ClockInFormProps {

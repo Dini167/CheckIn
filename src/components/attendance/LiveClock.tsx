@@ -6,9 +6,9 @@ export default function LiveClock() {
         return () => clearInterval(interval);
     }, []);
     return (
-        <div>
+        <div className="live-clock">
             {time.toLocaleTimeString("he-IL")}
-            <p>{time.toLocaleDateString("he-IL")}</p>
+            <p className="live-clock-date">{time.toLocaleDateString("he-IL")}</p>
         </div>
     );
 }

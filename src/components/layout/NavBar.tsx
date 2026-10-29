@@ -6,20 +6,21 @@ export default function NavBar() {
     if (!user) return null;
     return (
         <>
-            <nav>
-                <NavLink to={getHomePath(user,token)}>דף הבית</NavLink>
-                <NavLink to="/employee/attendance">הנוכחות שלי</NavLink>
-                <NavLink to="/employee/salary">השכר שלי</NavLink>
+            <nav className="app-sidebar">
+                <NavLink className="sidebar-link" to={getHomePath(user,token)}>דף הבית</NavLink>
+                <NavLink className="sidebar-link" to="/employee/attendance">הנוכחות שלי</NavLink>
+                <NavLink className="sidebar-link" to="/employee/salary">השכר שלי</NavLink>
                 {user.role == "TEAM_LEADER" && (
                     <>
-                        <NavLink to="/team-leader/members">ניהול עובדים</NavLink>
-                        <NavLink to="/team-leader/attendance">מי במשמרת</NavLink>
-                        <NavLink to="/team-leader/report">דוח נוכחות</NavLink>
-                        <NavLink to="/team-leader/correction-requests">בקשות לתיקון שעות</NavLink>
+                        <NavLink className="sidebar-link" to="/team-leader/members">ניהול עובדים</NavLink>
+                        <NavLink className="sidebar-link" to="/team-leader/attendance">מי במשמרת</NavLink>
+                        <NavLink className="sidebar-link" to="/team-leader/report">דוח נוכחות</NavLink>
+                        <NavLink className="sidebar-link" to="/team-leader/correction-requests">בקשות לתיקון שעות</NavLink>
+                        <NavLink className="sidebar-link" to="/team-leader/sick-notes">אישורי מחלה</NavLink>
                     </>
                 )}
-                <p>{user.name}</p>
-                <button onClick={logout}>התנתקות</button>
+                <p className="sidebar-user">{user.name}</p>
+                <button className="btn sidebar-logout" onClick={logout}>התנתקות</button>
             </nav>
         </>
     );

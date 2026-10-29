@@ -34,9 +34,9 @@ export default function MyAttendanceTable({ days, onCorrected }: { days: Calenda
             {formType === "correction"
                 ? <CorrectionForm key={thisDay.date} day={thisDay} onSuccess={() => { onCorrected(); }} />
                 : <SickNoteForm key={thisDay.date} day={thisDay} onSuccess={() => { onCorrected(); }} />}
-            <button onClick={() => setSelectedDay(null)}>סגור</button>
+            <button className="btn btn-light modal-close" onClick={() => setSelectedDay(null)}>סגור</button>
         </>}
-        <table>
+        <table className="table table-hover align-middle data-table">
             <thead>
                 <tr>
                     <th>תאריך</th>
@@ -59,10 +59,10 @@ export default function MyAttendanceTable({ days, onCorrected }: { days: Calenda
                         <td>{statusLabels[day.status]}</td>
                         <td>
                             {day.isGap && (
-                                <button onClick={() => { setSelectedDay(day.date); setFormType("correction"); }}>תיקון</button>
+                                <button className="btn btn-sm btn-outline-danger row-action" onClick={() => { setSelectedDay(day.date); setFormType("correction"); }}>תיקון</button>
                             )}
                             {day.status === "MISSING" && (
-                                <button onClick={() => { setSelectedDay(day.date); setFormType("sick"); }}>אישור מחלה</button>
+                                <button className="btn btn-sm btn-outline-primary row-action" onClick={() => { setSelectedDay(day.date); setFormType("sick"); }}>אישור מחלה</button>
                             )}
                         </td>
                     </tr>

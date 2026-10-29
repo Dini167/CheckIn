@@ -41,8 +41,8 @@ export default function RegisterForm() {
 
     return (
         <form onSubmit={handleSubmit((data) => submitRegister(data))}>
-            {errors.role && <span>{errors.role?.message}</span>}
-            <select {...register("role", { required: "יש לבחור תפקיד" })}>
+            {errors.role && <span className="invalid-feedback d-block">{errors.role?.message}</span>}
+            <select className="form-select mb-3" {...register("role", { required: "יש לבחור תפקיד" })}>
                 <option value="">בחר תפקיד</option>
                 <option value="EMPLOYEE">עובד</option>
                 <option value="TEAM_LEADER">ראש צוות</option>
@@ -50,8 +50,8 @@ export default function RegisterForm() {
             <UserFields register={register} errors={errors} />
             {selectedRole === "TEAM_LEADER" && <TeamLeaderFields register={register} errors={errors} />}
             {selectedRole === "EMPLOYEE" && <EmployeeFields register={register} errors={errors} />}
-            {errors.root && <span>{errors.root.message}</span>}
-            <button type="submit">הרשמה</button>
+            {errors.root && <span className="alert alert-danger d-block py-2">{errors.root.message}</span>}
+            <button className="btn btn-primary w-100" type="submit">הרשמה</button>
         </form>
     )
 }
