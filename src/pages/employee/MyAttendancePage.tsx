@@ -40,11 +40,11 @@ export default function MyAttendancePage() {
         {!myCorrectionsLoading && !myCorrectionsError && myCorrections && myCorrections.length === 0 && <p>אין בקשות לתיקון שעות</p>}
         {!myCorrectionsLoading && !myCorrectionsError && myCorrections && myCorrections.length > 0 && (
             <ul>
-                {myCorrections.map(correction => (
+                {myCorrections.map(correction => (correction.workDate.startsWith(dayCalendar) ? (
                     <li key={correction.id}>
                         {correction.workDate} - {correction.reason} - {correction.status === "PENDING" ? "ממתין" : correction.status === "APPROVED" ? "מאושר" : correction.status === "REJECTED" ? "נדחה" : "הוחל"}
                     </li>
-                ))}
+                ) : null)).filter(Boolean)}
             </ul>
         )}
         </div>
