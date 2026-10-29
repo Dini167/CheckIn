@@ -17,7 +17,7 @@ export default function MyAttendancePage() {
     const { data: myCalendar, isLoading, error,refetch: refetchCalendar } = useFetch(() => getCalendar({ month: dayCalendar }), "שגיאה בטעינת לוח חודשי", ["monthCalendar", dayCalendar]);
     const resMyCalender = myCalendar ?? undefined;
     const quota = data ?? undefined;
-    
+    const monthCorrections = myCorrections?.filter(correction => correction.workDate.startsWith(dayCalendar)) ?? [];
     return (
         <div>
             <h1>הנוכחות שלי בחודש {new Date(dayCalendar).toLocaleString("default", { month: "long" })}</h1>
@@ -37,14 +37,14 @@ export default function MyAttendancePage() {
         <h2>הבקשות לתיקון שעות שלי</h2>
         {myCorrectionsLoading && <p>טוען...</p>}
         {myCorrectionsError && <p style={{ color: 'red' }}>{myCorrectionsError}</p>}
-        {!myCorrectionsLoading && !myCorrectionsError && myCorrections && myCorrections.length === 0 && <p>אין בקשות לתיקון שעות</p>}
-        {!myCorrectionsLoading && !myCorrectionsError && myCorrections && myCorrections.length > 0 && (
+        {!myCorrectionsLoading && !myCorrectionsError && myCorrections && monthCorrections.length === 0 && <p>אין בקשות לתיקון שעות</p>}
+        {!myCorrectionsLoading && !myCorrectionsError && myCorrections && monthCorrections.length > 0 && (
             <ul>
-                {myCorrections.map(correction => (correction.workDate.startsWith(dayCalendar) ? (
+                {monthCorrections.map(correction => (
                     <li key={correction.id}>
                         {correction.workDate} - {correction.reason} - {correction.status === "PENDING" ? "ממתין" : correction.status === "APPROVED" ? "מאושר" : correction.status === "REJECTED" ? "נדחה" : "הוחל"}
                     </li>
-                ) : null)).filter(Boolean)}
+                ))}
             </ul>
         )}
         </div>
