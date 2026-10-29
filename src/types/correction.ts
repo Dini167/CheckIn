@@ -27,5 +27,5 @@ export interface TeamCorrection {
     newClockInTime: string| null;
     newClockOutTime: string| null;
     reason: string;
-    status: "PENDING" | "APPROVED" | "REJECTED";
+    status: "PENDING" | "APPROVED" | "REJECTED"|"APPLIED";
 }
