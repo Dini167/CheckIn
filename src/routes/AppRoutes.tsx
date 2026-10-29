@@ -9,9 +9,11 @@ import ProtectedRoute from '../routes/ProtectedRoute';
 import { useAuth } from '../hooks/useAuth';
 import { getHomePath } from '../utils/getHomePath';
 import MySalaryPage from '../pages/employee/MySalaryPage';
+import CorrectionRequestsPage from '../pages/teamLeader/CorrectionRequestsPage';
 import TeamMembersPage from '../pages/teamLeader/TeamMembersPage';
 import TeamReportPage from '../pages/teamLeader/TeamReportPage';
 import MyAttendancePage from '../pages/employee/MyAttendancePage';
+
 
 export default function AppRoutes() {
     const { user, token } = useAuth();
@@ -27,15 +29,17 @@ export default function AppRoutes() {
                 <TeamLeaderHomePage /></ProtectedRoute>} />
             <Route path="/team-leader/members" element={<ProtectedRoute allowedRole={["TEAM_LEADER"]}>
                 <TeamMembersPage /></ProtectedRoute>} />
-            <Route path="/employee/salary" element={<ProtectedRoute allowedRole={["EMPLOYEE","TEAM_LEADER"]}>
+            <Route path="/employee/salary" element={<ProtectedRoute allowedRole={["EMPLOYEE", "TEAM_LEADER"]}>
                 <MySalaryPage /></ProtectedRoute>} />
             <Route path="*" element={<Navigate replace to="/" />} />
             <Route path="/team-leader/attendance" element={<ProtectedRoute allowedRole={["TEAM_LEADER"]}>
                 <TeamAttendancePage /></ProtectedRoute>} />
             <Route path="/team-leader/report" element={<ProtectedRoute allowedRole={["TEAM_LEADER"]}>
                 <TeamReportPage /></ProtectedRoute>} />
-            <Route path="/employee/attendance" element={<ProtectedRoute allowedRole={["EMPLOYEE","TEAM_LEADER"]}>
+            <Route path="/employee/attendance" element={<ProtectedRoute allowedRole={["EMPLOYEE", "TEAM_LEADER"]}>
                 <MyAttendancePage /></ProtectedRoute>} />
+            <Route path="/team-leader/correction-requests" element={<ProtectedRoute allowedRole={["TEAM_LEADER"]}>
+                <CorrectionRequestsPage /></ProtectedRoute>} />
         </Routes>
     );
 }

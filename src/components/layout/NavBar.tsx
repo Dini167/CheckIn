@@ -15,6 +15,7 @@ export default function NavBar() {
                         <NavLink to="/team-leader/members">ניהול עובדים</NavLink>
                         <NavLink to="/team-leader/attendance">מי במשמרת</NavLink>
                         <NavLink to="/team-leader/report">דוח נוכחות</NavLink>
+                        <NavLink to="/team-leader/correction-requests">בקשות לתיקון שעות</NavLink>
                     </>
                 )}
                 <p>{user.name}</p>

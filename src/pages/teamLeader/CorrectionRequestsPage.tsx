@@ -8,11 +8,11 @@ export default function CorrectionRequestsPage() {
     return (
         <div>
             <h1>בקשות לתיקון שעות</h1>
-            {isLoading && requests && <p>טוען...</p>}
+            {isLoading &&<p>טוען...</p>}
             {error && <p>{error}</p>}
-            {requests? requests.map((request) => (
+            {!isLoading && !error && (requests && requests.length > 0 ? requests.map((request) => (
                 <CorrectionRequestItem key={request.id} request={request} onReviewed={() => { refetchRequests(); }} />
-            )) : <p>אין בקשות שממתינות לאישור</p>}
+            )) : <p>אין בקשות שממתינות לאישור</p>)}
         </div>
     );
 }
