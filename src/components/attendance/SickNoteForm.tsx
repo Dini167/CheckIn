@@ -15,7 +15,7 @@ export default function SickNoteForm({ day, onSuccess }: { day: CalendarDay, onS
         formdata.append("note", data.note);
         formdata.append("file", data.file[0]);
         formdata.append("fromDate", day.date);
-        formdata.append("toDate", day.date);
+        formdata.append("toDate", day.date);   
         try {
             await uploadSickNote(formdata);
             setSent(true);
