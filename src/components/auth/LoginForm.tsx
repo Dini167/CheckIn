@@ -11,7 +11,7 @@ import { useAuth } from '../../hooks/useAuth';
 export default function LoginForm() {
     const navigate = useNavigate();
     const { login } = useAuth();
-    const { setError, register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>();
+    const { setError, register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginFormValues>();
     async function submitLogin(data: LoginFormValues) {
         try {
             const res = await loginUser(data);
@@ -36,7 +36,8 @@ export default function LoginForm() {
             <MyInput label='אימייל' type='email' placeholder='יש להזין אימייל' {...register('email', { required: 'יש להזין אימייל', pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'כתובת אימייל לא תקינה' } })} error={errors.email?.message}></MyInput>
             <MyInput label='סיסמה' type='password' placeholder='יש להזין סיסמה' {...register('password', { required: 'יש להזין סיסמה' })} error={errors.password?.message}></MyInput>
             {errors.root && <span className="alert alert-danger d-block py-2">{errors.root.message}</span>}
-            <button className="btn btn-primary w-100" type="submit">התחברות</button>
+            <button className="btn btn-primary w-100" type="submit" disabled={isSubmitting}>{isSubmitting ? "מתחבר..." : "התחברות"}</button>
+            {isSubmitting && <p className="loading mt-3">השרת מתעורר, זה עלול לקחת עד דקה. אין צורך ללחוץ שוב.</p>}
         </form>
     );
 }
